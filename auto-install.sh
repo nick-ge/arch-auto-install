@@ -64,3 +64,14 @@ echo "DONE"
 echo -n "Enabling swap partition /dev/sda1..."
 swapon /dev/sda1 > /dev/null
 echo "DONE"
+
+
+
+# Subsection: Mounting the file system
+echo -n "Mounting file system to /mnt..."
+STATUS=$(mount /dev/sda2 /mnt)
+if [ -z $STATUS ]; then
+    echo "DONE"
+else
+    abort
+fi
