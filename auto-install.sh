@@ -54,25 +54,13 @@ fi
 
 # Subsection: Format the partitions
 echo -n "Formatting root partition /dev/sda2..."
-STATUS=$(mkfs.ext4 -q /dev/sda2)
-if [ -z $STATUS ]; then
-    echo "DONE"
-else
-    abort
-fi
+mkfs.ext4 -q /dev/sda2
+echo "DONE"
 
 echo -n "Setting up swap partition /dev/sda1..."
-STATUS=$(mkswap /dev/sda1)
-if [ -z $STATUS ]; then
-    echo "DONE"
-else
-    abort
-fi
+mkswap /dev/sda1 > /dev/null
+echo "DONE"
 
 echo -n "Enabling swap partition /dev/sda1..."
-STATUS=$(swapon /dev/sda1)
-if [ -z $STATUS ]; then
-    echo "DONE"
-else
-    abort
-fi
+swapon /dev/sda1 > /dev/null
+echo "DONE"
