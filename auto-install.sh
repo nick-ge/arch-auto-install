@@ -4,10 +4,11 @@
 # specific device.
 # Bases on https://wiki.archlinux.org/index.php/Installation_guide
 
-STATUS="asd"
+# Common variable for storing return values of certain commands
+STATUS=""
 
 # Information for Partitioning
-SWAP="8"
+SWAP="8G"
 
 abort() {
     echo -e "\n${STATUS}"
@@ -20,11 +21,24 @@ abort() {
 # Update the system clock
 echo -n "Synchronizing system clock..."
 
-#STATUS=$(timedatectl set-ntp true)
+STATUS=$(timedatectl set-ntp true)
 if [ -z $STATUS ]; then
    echo "DONE"
 else
     abort
 fi
 
+# Partition the disk
+echo -n "Partition the disk..."
 
+sfdisk /dev/sda << EOF
+    , ${SWAP}, S
+    , , , *
+EOF
+
+STATUS=$(sfdisk -V /dev/sda)
+if [ "$STATUS" = "/dev/sda:" ]; then
+    echo "DONE"
+else
+    abort
+fi
