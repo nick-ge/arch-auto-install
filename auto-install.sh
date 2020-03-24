@@ -31,7 +31,7 @@ fi
 # Partition the disk
 echo -n "Partition the disk..."
 
-sfdisk /dev/sda << EOF
+sfdisk /dev/sda > /dev/null << EOF
     , ${SWAP}, S
     , , , *
 EOF
