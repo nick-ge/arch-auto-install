@@ -21,13 +21,14 @@ abort() {
 
 # Subsection: Update the system clock
 echo -n "Synchronizing system clock..."
-
 STATUS=$(timedatectl set-ntp true)
 if [ -z $STATUS ]; then
    echo "DONE"
 else
     abort
 fi
+
+
 
 # Subsection: Partition the disk
 echo -n "Partition the disk..."
@@ -44,6 +45,33 @@ EOF
 # sfdisk -V: verifies the partition table of /dev/sda
 STATUS=$(sfdisk -V /dev/sda)
 if [ "$STATUS" = "/dev/sda:" ]; then
+    echo "DONE"
+else
+    abort
+fi
+
+
+
+# Subsection: Format the partitions
+echo -n "Formatting root partition /dev/sda2..."
+STATUS=$(mkfs.ext4 /dev/sda2)
+if [ -z $STATUS ]; then
+    echo "DONE"
+else
+    abort
+fi
+
+echo -n "Setting up swap partition /dev/sda1..."
+STATUS=$(mkswap /dev/sda1)
+if [ -z $STATUS ]; then
+    echo "DONE"
+else
+    abort
+fi
+
+echo -n "Enabling swap partition /dev/sda1..."
+STATUS=$(swapon /dev/sda1)
+if [ -z $STATUS ]; then
     echo "DONE"
 else
     abort
