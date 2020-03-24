@@ -54,7 +54,7 @@ fi
 
 # Subsection: Format the partitions
 echo -n "Formatting root partition /dev/sda2..."
-STATUS=$(mkfs.ext4 /dev/sda2)
+STATUS=$(mkfs.ext4 -q /dev/sda2)
 if [ -z $STATUS ]; then
     echo "DONE"
 else
