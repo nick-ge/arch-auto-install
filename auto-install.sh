@@ -7,6 +7,7 @@
 
 # Common variable for storing return values of certain commands
 STATUS=""
+RETURN=0
 
 # Information for Partitioning
 SWAP="8G"
@@ -19,10 +20,13 @@ abort() {
 
 # Section: Pre-installation
 
+
 # Subsection: Update the system clock
 echo -n "Synchronizing system clock..."
 STATUS=$(timedatectl set-ntp true)
-if [ -z $STATUS ]; then
+RETURN=$?
+echo $RETURN
+if [ -z $STATUS ] && [ $RETURN -eq 0 ]; then
    echo "DONE"
 else
     abort
@@ -41,6 +45,7 @@ sfdisk /dev/sda > /dev/null << EOF
     , ${SWAP}, S
     , , , *
 EOF
+RETURN=$?
 
 # sfdisk -V: verifies the partition table of /dev/sda
 STATUS=$(sfdisk -V /dev/sda)
@@ -55,8 +60,14 @@ fi
 # Subsection: Format the partitions
 echo -n "Formatting partitions..."
 mkfs.ext4 -q /dev/sda2
+RETURN=$?
+echo $RETURN
 mkswap /dev/sda1 > /dev/null
+RETURN=$?
+echo $RETURN
 swapon /dev/sda1 > /dev/null
+RETURN=$?
+echo $RETURN
 echo "DONE"
 
 
@@ -64,6 +75,8 @@ echo "DONE"
 # Subsection: Mounting the file system
 echo -n "Mounting file system to /mnt..."
 STATUS=$(mount /dev/sda2 /mnt)
+RETURN=$?
+echo $RETURN
 if [ -z $STATUS ]; then
     echo "DONE"
 else
