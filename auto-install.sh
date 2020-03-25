@@ -53,15 +53,9 @@ fi
 
 
 # Subsection: Format the partitions
-echo -n "Formatting root partition /dev/sda2..."
+echo -n "Formatting partitions..."
 mkfs.ext4 -q /dev/sda2
-echo "DONE"
-
-echo -n "Setting up swap partition /dev/sda1..."
 mkswap /dev/sda1 > /dev/null
-echo "DONE"
-
-echo -n "Enabling swap partition /dev/sda1..."
 swapon /dev/sda1 > /dev/null
 echo "DONE"
 
