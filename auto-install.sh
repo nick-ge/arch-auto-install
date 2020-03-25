@@ -24,7 +24,7 @@ check_returncode() {
     else
         echo "ERROR"
         echo -e "\n${STATUS}"
-        echo "=> Installation process aborted"
+        echo "=> ERROR: Installation process aborted"
         exit $RETURN
     fi
 }
