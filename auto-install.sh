@@ -18,7 +18,7 @@ SWAP="8G"
 # respective return code in case of an error.
 check_returncode() {
     local RETURN=${1} ERRORTEXT=${2}
-    if [ $RETURN -eq 0]; then
+    if [ $RETURN -eq 0 ]; then
         echo "OK"
         return 0
     else
