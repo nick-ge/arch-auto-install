@@ -12,8 +12,8 @@ RETURN=0
 
 
 # Information for partitioning
-SWAP="7.8G"
-ROOT="7.2G"
+SWAP="8G"
+ROOT="25G"
 
 
 # Util function which gets invoked after every command.
