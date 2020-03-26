@@ -85,7 +85,7 @@ ERROR=$(curl --silent "https://www.archlinux.org/mirrorlist/?country=DE&protocol
 check_returncode $? $ERROR
 
 ## Subsection: Install essential packages
-echo -ne "Installing essential packages..."
+echo -ne "Installing essential packages...\t"
 ERROR=$(pacstrap /mnt $(cat packagelist) 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
