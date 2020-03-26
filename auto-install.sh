@@ -32,12 +32,12 @@ check_returncode() {
 # Section: Pre-Installation
 
 ## Subsection: Update the system clock
-echo -ne "Synchronizing system clock...\t\t\t"
+echo -ne "Synchronizing system clock...\t\t"
 STATUS=$(timedatectl set-ntp true)
 check_returncode $? $STATUS
 
 ## Subsection: Partition the disk
-echo -ne "Partition the disk...\t\t"
+echo -ne "Partition the disk...\t\t\t"
 
 # sfdisk is a "scriptable" version of fdisk, it receives the "user input" from stdin.
 # Here we're creating two partitions:
