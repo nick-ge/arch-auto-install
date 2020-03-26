@@ -60,21 +60,21 @@ check_returncode $? $ERROR
 
 ## Subsection: Format the partitions
 echo -ne "Formatting root partition...\t\t"
-ERROR=$(mkfs.ext4 -q /dev/sda2 2>&1 1>/dev/null)
+ERROR=$(mkfs.ext4 -q /dev/sda1 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 echo -ne "Initializing swap partition...\t\t"
-ERROR=$(mkswap /dev/sda1 2>&1 1>/dev/null)
+ERROR=$(mkswap /dev/sda2 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 echo -ne "Enabling swap partition...\t\t"
-ERROR=$(swapon /dev/sda1 2>&1 1>/dev/null)
+ERROR=$(swapon /dev/sda2 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 
 ## Subsection: Mounting the file system
 echo -ne "Mounting file system to /mnt...\t\t"
-ERROR=$(mount /dev/sda2 /mnt 2>&1 1>/dev/null)
+ERROR=$(mount /dev/sda1 /mnt 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 # Section: Installation
