@@ -86,7 +86,7 @@ check_returncode $? $ERROR
 
 ## Subsection: Install essential packages
 echo -ne "Installing essential packages..."
-ERROR=$(pacstrap /mnt base linux linux-firmware vim man-db man-pages texinfo 2>&1 1>/dev/null)
+ERROR=$(pacstrap /mnt >packagelist 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 
