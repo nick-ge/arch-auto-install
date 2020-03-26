@@ -10,8 +10,11 @@ STATUS=""
 # Common variable for storing return codes of certain commands
 RETURN=0
 
-# Information for Partitioning
+
+# Information for partitioning
 SWAP="8G"
+ROOT="111.2G"
+
 
 # Util function which gets invoked after every command.
 # It checks the given return code and prints the error message and the
@@ -44,8 +47,8 @@ echo -ne "Partition the disk...\t\t\t"
 # 1. a swap partition of size SWAP
 # 2. a root partition which takes the remaining available space on the hard drive as its size and marked as bootable
 sfdisk /dev/sda > /dev/null << EOF
+    , ${ROOT}, , *
     , ${SWAP}, S
-    , , , *
 EOF
 check_returncode $? "Partitioning with sfdisk failed"
 
