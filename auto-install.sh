@@ -32,7 +32,7 @@ check_returncode() {
 # Section: Pre-Installation
 
 ## Subsection: Update the system clock
-echo -ne "Synchronizing system clock...\t\t"
+echo -ne "Synchronizing system clock...\t\t\t"
 STATUS=$(timedatectl set-ntp true)
 check_returncode $? $STATUS
 
@@ -78,6 +78,6 @@ check_returncode $? $STATUS
 # Section: Installation
 
 ## Subsection: Select the mirror
-echo -ne "Downloading current mirrorlist...\t\t"
+echo -ne "Downloading current mirrorlist...\t"
 STATUS=$(curl --silent "https://www.archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4&use_mirror_status=on" | sed 's/#Server/Server/' > /etc/pacman.d/mirrorlist)
 check_returncode $? $STATUS
