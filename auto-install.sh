@@ -89,10 +89,36 @@ echo -ne "Installing essential packages...\t"
 ERROR=$(pacstrap /mnt $(cat packagelist) 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
+# Section: Configure the system
 
+## Subsection: fstab
+echo -ne "Generating an fstab file...\t"
+ERROR=$(genfstab -U /mnt 2>&1 1>>/mnt/etc/fstab)
+check_returncode $? $ERROR
 
+## Subsection: Chroot
+echo -ne "Chrooting into new system...\t"
+ERROR=$(arch-chroot /mnt 2>&1 1>/dev/null)
+check_returncode $? $ERROR
 
+## Subsection: Time zone
+echo -ne "Setting time zone...\t"
+ERROR=$(ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime 2>&1 1>/dev/null)
+check_returncode $? $ERROR
 
+echo -ne "Syncing hardware clock...\t"
+ERROR=$(hwclock --systohc 2>&1 1>/dev/null)
+check_returncode $? $ERROR
 
+## Subsection: Localization
+echo -ne "Uncommeting needed locales...\t"
+ERROR=$(sed 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen 2>&1 1>/etc/locale.gen)
+check_returncode $? $ERROR
 
+echo -ne "Creating /etc/locale.conf...\t"
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
+check_returncode $? $ERROR
 
+echo -ne "Making keyboard settings persistent...\t"
+echo "KEYMAP=de-latin1" > /etc/vconsole.conf
+check_returncode $? $ERROR
