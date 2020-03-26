@@ -12,8 +12,8 @@ RETURN=0
 
 
 # Information for partitioning
-SWAP="8G"
-ROOT="111.2G"
+SWAP="7.8G"
+ROOT="7.2G"
 
 
 # Util function which gets invoked after every command.
@@ -46,7 +46,7 @@ echo -ne "Partition the disk...\t\t\t"
 # Here we're creating two partitions:
 # 1. a swap partition of size SWAP
 # 2. a root partition which takes the remaining available space on the hard drive as its size and marked as bootable
-sfdisk /dev/sda > /dev/null << EOF
+sfdisk /dev/sda 2>&1 1> /dev/null << EOF
     , ${ROOT}, , *
     , ${SWAP}, S
 EOF
