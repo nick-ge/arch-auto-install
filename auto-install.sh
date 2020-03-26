@@ -6,7 +6,7 @@
 # The following comments prefixed with "Section:" refer to the (sub)sections in the Arch Wiki's Installation Guide.
 
 # Common variable for storing return texts of certain commands
-STATUS=""
+ERROR=""
 # Common variable for storing return codes of certain commands
 RETURN=0
 
@@ -26,7 +26,7 @@ check_returncode() {
         return 0
     else
         echo "ERROR"
-        echo -e "\n${STATUS}"
+        echo -e "\n${ERROR}"
         echo "=> ERROR: Installation process aborted"
         exit $RETURN
     fi
@@ -36,8 +36,8 @@ check_returncode() {
 
 ## Subsection: Update the system clock
 echo -ne "Synchronizing system clock...\t\t"
-STATUS=$(timedatectl set-ntp true)
-check_returncode $? $STATUS
+ERROR=$(timedatectl set-ntp true 2>&1 1>/dev/null)
+check_returncode $? $ERROR
 
 ## Subsection: Partition the disk
 echo -ne "Partition the disk...\t\t\t"
@@ -46,7 +46,7 @@ echo -ne "Partition the disk...\t\t\t"
 # Here we're creating two partitions:
 # 1. a swap partition of size SWAP
 # 2. a root partition which takes the remaining available space on the hard drive as its size and marked as bootable
-sfdisk /dev/sda 2>&1 1> /dev/null << EOF
+sfdisk /dev/sda 1>/dev/null 2>&1 << EOF
     , ${ROOT}, , *
     , ${SWAP}, S
 EOF
@@ -54,33 +54,45 @@ check_returncode $? "Partitioning with sfdisk failed"
 
 echo -ne "Verifing Partition table...\t\t"
 # sfdisk -V: verifies the partition table of /dev/sda
-STATUS=$(sfdisk -V /dev/sda)
-check_returncode $? $STATUS
+ERROR=$(sfdisk -V /dev/sda 2>&1 1>/dev/null)
+check_returncode $? $ERROR
 
 
 ## Subsection: Format the partitions
 echo -ne "Formatting root partition...\t\t"
-STATUS=$(mkfs.ext4 -q /dev/sda2)
-check_returncode $? $STATUS
+ERROR=$(mkfs.ext4 -q /dev/sda2 2>&1 1>/dev/null)
+check_returncode $? $ERROR
 
 echo -ne "Initializing swap partition...\t\t"
-STATUS=$(mkswap /dev/sda1 > /dev/null)
-check_returncode $? $STATUS
+ERROR=$(mkswap /dev/sda1 2>&1 1>/dev/null)
+check_returncode $? $ERROR
 
 echo -ne "Enabling swap partition...\t\t"
-STATUS=$(swapon /dev/sda1 > /dev/null)
-check_returncode $? $STATUS
+ERROR=$(swapon /dev/sda1 2>&1 1>/dev/null)
+check_returncode $? $ERROR
 
 
 ## Subsection: Mounting the file system
 echo -ne "Mounting file system to /mnt...\t\t"
-STATUS=$(mount /dev/sda2 /mnt)
-check_returncode $? $STATUS
-
+ERROR=$(mount /dev/sda2 /mnt 2>&1 1>/dev/null)
+check_returncode $? $ERROR
 
 # Section: Installation
 
 ## Subsection: Select the mirror
 echo -ne "Downloading current mirrorlist...\t"
-STATUS=$(curl --silent "https://www.archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4&use_mirror_status=on" | sed 's/#Server/Server/' > /etc/pacman.d/mirrorlist)
-check_returncode $? $STATUS
+ERROR=$(curl --silent "https://www.archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4&use_mirror_status=on" | sed 's/#Server/Server/' > /etc/pacman.d/mirrorlist)
+check_returncode $? $ERROR
+
+## Subsection: Install essential packages
+echo -ne "Installing essential packages..."
+ERROR=$(pacstrap /mnt base linux linux-firmware vim man-db man-pages texinfo 2>&1 1>/dev/null)
+check_returncode $? $ERROR
+
+
+
+
+
+
+
+
