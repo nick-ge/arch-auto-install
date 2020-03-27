@@ -7,9 +7,6 @@
 
 # Common variable for storing return texts of certain commands
 ERROR=""
-# Common variable for storing return codes of certain commands
-RETURN=0
-
 
 # Information for partitioning
 SWAP="8G"
@@ -111,7 +108,7 @@ ERROR=$(hwclock --systohc 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 ## Subsection: Localization
-echo -ne "Uncommeting needed locales...\t"
+echo -ne "Uncommenting needed locales...\t"
 ERROR=$(sed 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen 2>&1 1>/etc/locale.gen)
 check_returncode $? $ERROR
 
@@ -122,3 +119,43 @@ check_returncode $? $ERROR
 echo -ne "Making keyboard settings persistent...\t"
 echo "KEYMAP=de-latin1" > /etc/vconsole.conf
 check_returncode $? $ERROR
+
+## Subsection: Network configuration
+read -p "Enter hostname: " hostname
+echo -ne "Creating hostname file...\t"
+ERROR=$(echo "${hostname}" 2>&1 1>/etc/hostname)
+check_returncode $? $ERROR
+
+echo -ne "Add entry to hosts...\t"
+ERROR=$(echo -e "127.0.0.1\t${hostname}.localdomain ${hostname}" >> /etc/hosts)
+check_returncode $? $ERROR
+
+## Subsection: Initramfs
+## Needed later when encrypting hard drives
+
+## Subsection: Root password
+#echo -ne "Root password needed..."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
