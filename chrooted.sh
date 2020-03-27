@@ -42,7 +42,7 @@ ERROR=$(echo "${hostname}" 2>&1 1>/etc/hostname)
 check_returncode $? $ERROR
 
 echo -ne "Add entry to hosts...\t\t\t"
-ERROR=$(echo -e "127.0.0.1\tlocalhost\n::1\tlocalhost\n127.0.0.1\t${hostname}.localdomain ${hostname}" >> /etc/hosts)
+ERROR=$(echo -e "127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.0.1\t${hostname}.localdomain ${hostname}" >> /etc/hosts)
 check_returncode $? $ERROR
 
 ## Subsection: Initramfs
