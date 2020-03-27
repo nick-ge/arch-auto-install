@@ -27,7 +27,7 @@ echo -ne "Uncommenting needed locales...\t\t"
 ERROR=$(sed 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen 2>&1 1>/etc/locale.gen)
 check_returncode $? $ERROR
 
-echo -ne "Creating /etc/locale.conf...\t"
+echo -ne "Creating /etc/locale.conf...\t\t"
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 check_returncode $? $ERROR
 
@@ -49,15 +49,15 @@ check_returncode $? $ERROR
 ## Needed later when encrypting hard drives
 
 ## Subsection: Root password
-echo -ne "Root password needed"
+echo "Root password needed"
 passwd
 
 ## Subsection: Boot loader
-echo -ne "Installing grub...\t\t"
+echo -ne "Installing grub...\t\t\t"
 ERROR=$(grub-install --target=i386-pc /dev/sda 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
-echo -ne "Generating main config...\t"
+echo -ne "Generating main config...\t\t"
 ERROR=$(grub-mkconfig -o /boot/grub/grub.cfg 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
