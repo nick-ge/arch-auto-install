@@ -98,7 +98,6 @@ check_returncode $? $ERROR
 cp chrooted.sh /mnt/root/.
 chmod +x /mnt/root/chrooted.sh
 echo -ne "Chrooting into new system...\t"
-ERROR=$(arch-chroot /mnt /root/chrooted.sh 2>&1 1>/dev/null)
-check_returncode $? $ERROR
+arch-chroot /mnt /root/chrooted.sh 1>/dev/null 2>&1
 
 echo "=> Arch base installation successfully finished"
