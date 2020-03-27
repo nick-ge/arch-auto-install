@@ -1,5 +1,18 @@
 #!/bin/sh
 
+check_returncode() {
+    local RETURN=${1} ERRORTEXT=${2}
+    if [ $RETURN -eq 0 ]; then
+        echo "OK"
+        return 0
+    else
+        echo "ERROR"
+        echo -e "\n${ERROR}"
+        echo "=> ERROR: Installation process aborted"
+        exit $RETURN
+    fi
+}
+
 ## Subsection: Time zone
 echo -ne "Setting time zone...\t"
 ERROR=$(ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime 2>&1 1>/dev/null)
