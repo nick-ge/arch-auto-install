@@ -19,7 +19,8 @@ check_returncode() {
         echo "OK"
         return 0
     else
-        echo -e "ERROR\n${ERRORTEXT}"
+        echo "ERROR"
+        echo "$ERRORTEXT" >&2
         echo "=> Installation process aborted"
         exit $RETURN
     fi
@@ -38,6 +39,10 @@ check_returncode $? $ERROR
 ./pre/partitioning.sh
 if [ $? -eq 0 ]; then
     echo "=> Partitioning successfully finished\n"
+else
+    echo "=> Partitioning failed" >&2
+    exit 1
+fi
 
 ## Subsection: Mounting the file system
 echo -ne "Mounting file system to /mnt...\t\t\t"
