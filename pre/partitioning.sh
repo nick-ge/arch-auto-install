@@ -25,10 +25,8 @@ if [ -f pre/partition-table.conf ]; then
 
     echo -ne "Applying partition instructions...\t\t\t"
     # sfdisk is a "scriptable" version of fdisk, it receives the "user input" from stdin.
-    sfdisk /dev/sda 1>/dev/null 2>&1 <<- EOF
-        $(cat pre/partition-table.conf)
-    EOF
-    check_returncode $? "Partitioning with sfdisk failed"
+    ERROR=$(cat pre/partition-table.conf | sfdisk /dev/sda 2>&1 1>/dev/null)
+    check_returncode $? $ERROR
 
     echo -ne "Verifying Partition table...\t\t\t"
     # sfdisk -V: verifies the partition table of /dev/sda
