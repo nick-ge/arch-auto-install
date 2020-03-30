@@ -38,7 +38,7 @@ check_returncode $? $ERROR
 
 ./pre/partitioning.sh
 if [ $? -eq 0 ]; then
-    echo "=> Partitioning successfully finished\n"
+    echo -e "=> Partitioning successfully finished\n"
 else
     echo "=> Partitioning failed" >&2
     exit 1
@@ -70,7 +70,7 @@ check_returncode $? $ERROR
 
 ## Subsection: Chroot
 
-cp chrooted.sh /mnt/root/.
+cp pre/chrooted.sh /mnt/root/.
 chmod +x /mnt/root/chrooted.sh
 echo "Chrooting into new system..."
 arch-chroot /mnt /root/chrooted.sh
