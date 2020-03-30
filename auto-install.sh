@@ -22,9 +22,8 @@ check_returncode() {
         echo "OK"
         return 0
     else
-        echo "ERROR"
-        echo -e "\n${ERRORTEXT}"
-        echo "=> ERROR: Installation process aborted"
+        echo -e "ERROR\n${ERRORTEXT}"
+        echo "=> Installation process aborted"
         exit $RETURN
     fi
 }
@@ -44,7 +43,7 @@ echo -e "\tPartitioning"
 echo -e "$SUBHORIZONTALE\n"
 
 echo -ne "Reading partition table...\t\t\t"
-cat partition-table.conf
+PARTITIONTABLE=$(cat partition-table.conf)
 check_returncode $? "arch-auto-install/partition-table.conf not found"
 
 echo -ne "Apply partition instructions...\t\t\t"
