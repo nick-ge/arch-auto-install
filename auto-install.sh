@@ -10,7 +10,7 @@ ERROR=""
 
 # Some pseudo GUI variables
 HORIZONTALE="=========================================================================="
-SUBHORIZONATLE="====================================="
+SUBHORIZONTALE="====================================="
 
 
 # Util function which gets invoked after every command.
@@ -23,7 +23,7 @@ check_returncode() {
         return 0
     else
         echo "ERROR"
-        echo -e "\n${ERROR}"
+        echo -e "\n${ERRORTEXT}"
         echo "=> ERROR: Installation process aborted"
         exit $RETURN
     fi
@@ -47,7 +47,7 @@ echo -ne "Reading partition table...\t\t\t"
 PARTITIONTABLE=$(cat partition-table.conf 2>&1 1>/dev/null)
 check_returncode $? $PARTITIONTABLE
 
-echo -ne "Apply partition instructions...\t\t"
+echo -ne "Apply partition instructions...\t\t\t"
 # sfdisk is a "scriptable" version of fdisk, it receives the "user input" from stdin.
 sfdisk /dev/sda 1>/dev/null 2>&1 << EOF
     $PARTITIONTABLE
