@@ -14,34 +14,34 @@ check_returncode() {
 }
 
 ## Subsection: Time zone
-echo -ne "Setting time zone...\t\t\t"
+echo -ne "Setting time zone...\t\t\t\t"
 ERROR=$(ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
-echo -ne "Syncing hardware clock...\t\t"
+echo -ne "Syncing hardware clock...\t\t\t"
 ERROR=$(hwclock --systohc 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 ## Subsection: Localization
-echo -ne "Uncommenting needed locales...\t\t"
+echo -ne "Uncommenting needed locales...\t\t\t"
 ERROR=$(sed 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen 2>&1 1>/etc/locale.gen)
 check_returncode $? $ERROR
 
-echo -ne "Creating /etc/locale.conf...\t\t"
+echo -ne "Creating /etc/locale.conf...\t\t\t"
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 check_returncode $? $ERROR
 
-echo -ne "Making keyboard settings persistent...\t"
+echo -ne "Making keyboard settings persistent...\t\t"
 echo "KEYMAP=de-latin1" > /etc/vconsole.conf
 check_returncode $? $ERROR
 
 ## Subsection: Network configuration
 read -p "Enter hostname: " hostname
-echo -ne "Creating hostname file...\t\t"
+echo -ne "Creating hostname file...\t\t\t"
 ERROR=$(echo "${hostname}" 2>&1 1>/etc/hostname)
 check_returncode $? $ERROR
 
-echo -ne "Add entry to hosts...\t\t\t"
+echo -ne "Add entry to hosts...\t\t\t\t"
 ERROR=$(echo -e "127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.0.1\t${hostname}.localdomain ${hostname}" >> /etc/hosts)
 check_returncode $? $ERROR
 
@@ -53,11 +53,11 @@ echo "Root password needed"
 passwd
 
 ## Subsection: Boot loader
-echo -ne "Installing grub...\t\t\t"
+echo -ne "Installing grub...\t\t\t\t"
 ERROR=$(grub-install --target=i386-pc /dev/sda 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
-echo -ne "Generating main config...\t\t"
+echo -ne "Generating main config...\t\t\t"
 ERROR=$(grub-mkconfig -o /boot/grub/grub.cfg 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 

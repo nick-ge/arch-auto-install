@@ -13,6 +13,10 @@ SWAP="8G"
 ROOT="25G"
 
 
+# Some pseudo GUI variables
+HORIZONTALE="========================================================================="
+
+
 # Util function which gets invoked after every command.
 # It checks the given return code and prints the error message and the
 # respective return code in case of an error.
@@ -29,15 +33,19 @@ check_returncode() {
     fi
 }
 
+echo -e "\n$HORIZONTALE"
+echo -e "\t\t\tArch Linux Installation Script"
+echo -e "$HORIZONTALE\n"
+
 # Section: Pre-Installation
 
 ## Subsection: Update the system clock
-echo -ne "Synchronizing system clock...\t\t"
+echo -ne "Synchronizing system clock...\t\t\t"
 ERROR=$(timedatectl set-ntp true 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 ## Subsection: Partition the disk
-echo -ne "Partition the disk...\t\t\t"
+echo -ne "Partition the disk...\t\t\t\t"
 
 # sfdisk is a "scriptable" version of fdisk, it receives the "user input" from stdin.
 # Here we're creating two partitions:
@@ -49,47 +57,47 @@ sfdisk /dev/sda 1>/dev/null 2>&1 << EOF
 EOF
 check_returncode $? "Partitioning with sfdisk failed"
 
-echo -ne "Verifing Partition table...\t\t"
+echo -ne "Verifing Partition table...\t\t\t"
 # sfdisk -V: verifies the partition table of /dev/sda
 ERROR=$(sfdisk -V /dev/sda 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 
 ## Subsection: Format the partitions
-echo -ne "Formatting root partition...\t\t"
+echo -ne "Formatting root partition...\t\t\t"
 ERROR=$(mkfs.ext4 -q /dev/sda1 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
-echo -ne "Initializing swap partition...\t\t"
+echo -ne "Initializing swap partition...\t\t\t"
 ERROR=$(mkswap /dev/sda2 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
-echo -ne "Enabling swap partition...\t\t"
+echo -ne "Enabling swap partition...\t\t\t"
 ERROR=$(swapon /dev/sda2 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 
 ## Subsection: Mounting the file system
-echo -ne "Mounting file system to /mnt...\t\t"
+echo -ne "Mounting file system to /mnt...\t\t\t"
 ERROR=$(mount /dev/sda1 /mnt 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 # Section: Installation
 
 ## Subsection: Select the mirror
-echo -ne "Downloading current mirrorlist...\t"
-ERROR=$(curl --silent "https://www.archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4&use_mirror_status=on" | sed 's/#Server/Server/' > /etc/pacman.d/mirrorlist)
+echo -ne "Downloading current mirrorlist...\t\t"
+ERROR=$(curl --silent "https://www.archlinux.org/mirrorlist/?country=all&protocol=http&protocol=https&ip_version=4" | sed 's/#Server/Server/' > /etc/pacman.d/mirrorlist)
 check_returncode $? $ERROR
 
 ## Subsection: Install essential packages
-echo -ne "Installing essential packages...\t"
+echo -ne "Installing essential packages...\t\t"
 ERROR=$(pacstrap /mnt $(cat packagelist) 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 # Section: Configure the system
 
 ## Subsection: fstab
-echo -ne "Generating an fstab file...\t\t"
+echo -ne "Generating an fstab file...\t\t\t"
 ERROR=$(genfstab -U /mnt 2>&1 1>>/mnt/etc/fstab)
 check_returncode $? $ERROR
 
