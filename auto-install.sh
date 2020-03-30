@@ -44,8 +44,8 @@ echo -e "\tPartitioning"
 echo -e "$SUBHORIZONTALE\n"
 
 echo -ne "Reading partition table...\t\t\t"
-PARTITIONTABLE=$(cat partition-table.conf 2>&1 1>/dev/null)
-check_returncode $? $PARTITIONTABLE
+cat partition-table.conf
+check_returncode $? "arch-auto-install/partition-table.conf not found"
 
 echo -ne "Apply partition instructions...\t\t\t"
 # sfdisk is a "scriptable" version of fdisk, it receives the "user input" from stdin.
