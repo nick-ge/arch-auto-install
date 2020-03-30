@@ -8,13 +8,9 @@
 # Common variable for storing return texts of certain commands
 ERROR=""
 
-# Information for partitioning
-SWAP="8G"
-ROOT="25G"
-
-
 # Some pseudo GUI variables
-HORIZONTALE="========================================================================="
+HORIZONTALE="=========================================================================="
+SUBHORIZONATLE="====================================="
 
 
 # Util function which gets invoked after every command.
@@ -39,23 +35,25 @@ echo -e "$HORIZONTALE\n"
 
 # Section: Pre-Installation
 
-## Subsection: Update the system clock
 echo -ne "Synchronizing system clock...\t\t\t"
 ERROR=$(timedatectl set-ntp true 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
-## Subsection: Partition the disk
-echo -ne "Partition the disk...\t\t\t\t"
+echo -e "\n$SUBHORIZONTALE"
+echo -e "\tPartitioning"
+echo -e "$SUBHORIZONTALE\n"
 
+echo -ne "Reading partition table...\t\t\t"
+PARTITIONTABLE=$(cat partition-table.conf 2>&1 1>/dev/null)
+check_returncode $? $PARTITIONTABLE
+
+echo -ne "Apply partition instructions...\t\t"
 # sfdisk is a "scriptable" version of fdisk, it receives the "user input" from stdin.
-# Here we're creating two partitions:
-# 1. a swap partition of size SWAP
-# 2. a root partition which takes the remaining available space on the hard drive as its size and marked as bootable
 sfdisk /dev/sda 1>/dev/null 2>&1 << EOF
-    , ${ROOT}, , *
-    , ${SWAP}, S
+    $PARTITIONTABLE
 EOF
 check_returncode $? "Partitioning with sfdisk failed"
+
 
 echo -ne "Verifing Partition table...\t\t\t"
 # sfdisk -V: verifies the partition table of /dev/sda
