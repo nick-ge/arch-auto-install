@@ -23,7 +23,7 @@ echo -e "\tPartitioning"
 echo -e "$SUBHORIZONTALE\n"
 
 echo -ne "Reading partition table...\t\t\t"
-PARTITIONTABLE=$(cat partition-table.conf)
+PARTITIONTABLE=$(cat pre/partition-table.conf)
 check_returncode $? "arch-auto-install/partition-table.conf not found"
 
 echo -ne "Applying partition instructions...\t\t\t"
