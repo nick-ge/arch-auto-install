@@ -23,7 +23,7 @@ echo -e "$SUBHORIZONTALE\n"
 
 if [ -f pre/partition-table.conf ]; then
 
-    echo -ne "Applying partition instructions...\t\t\t"
+    echo -ne "Applying partition instructions...\t\t"
     # sfdisk is a "scriptable" version of fdisk, it receives the "user input" from stdin.
     ERROR=$(cat pre/partition-table.conf | sfdisk /dev/sda 2>&1 1>/dev/null)
     check_returncode $? $ERROR

@@ -36,7 +36,8 @@ ERROR=$(timedatectl set-ntp true 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 ./pre/partitioning.sh
-check_returncode $? 
+if [ $? -eq 0 ]; then
+    echo "=> Partitioning successfully finished\n"
 
 ## Subsection: Mounting the file system
 echo -ne "Mounting file system to /mnt...\t\t\t"
@@ -52,7 +53,7 @@ check_returncode $? $ERROR
 
 ## Subsection: Install essential packages
 echo -ne "Installing essential packages...\t\t"
-ERROR=$(pacstrap /mnt $(cat packagelist) 2>&1 1>/dev/null)
+ERROR=$(pacstrap /mnt $(cat pre/packagelist) 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 # Section: Configure the system
