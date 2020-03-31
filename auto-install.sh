@@ -72,6 +72,9 @@ check_returncode $? $ERROR
 ## Subsection: Chroot
 
 cp pre/chrooted.sh /mnt/root/.
+cp post/create_user.sh /mnt/root
+cp -r /root/.ssh /mnt/root/.
+
 chmod +x /mnt/root/chrooted.sh
 arch-chroot /mnt /root/chrooted.sh 2>&1
 
