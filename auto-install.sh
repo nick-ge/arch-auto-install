@@ -58,8 +58,8 @@ check_returncode $? $ERROR
 
 ## Subsection: Install essential packages
 echo -ne "Installing essential packages...\t\t"
-#ERROR=$(pacstrap /mnt $(cat pre/packagelist) 2>&1 1>/dev/null)
-ERROR=$(pacstrap /mnt base base linux linux-firmware grub 2>&1 1>/dev/null)
+ERROR=$(pacstrap /mnt $(cat pre/packagelist) 2>&1 1>/dev/null)
+#ERROR=$(pacstrap /mnt base base linux linux-firmware grub 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 # Section: Configure the system
