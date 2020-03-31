@@ -29,7 +29,7 @@ fi
 
 echo -ne "Adding user ${username}...\t\t\t\t"
 ERROR=$(useradd -m -G $GROUPS -s $SHELL $username 2>&1 1>/dev/null)
-check_returncode $? $ERROR
+check_returncode $? "$ERROR"
 
 echo "Password needed for ${username}"
 passwd $username

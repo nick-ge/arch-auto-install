@@ -34,7 +34,7 @@ echo -e "$HORIZONTALE\n"
 
 echo -ne "Synchronizing system clock...\t\t\t"
 ERROR=$(timedatectl set-ntp true 2>&1 1>/dev/null)
-check_returncode $? $ERROR
+check_returncode $? "$ERROR"
 
 ./partitioning/partitioning.sh
 if [ $? -eq 0 ]; then
@@ -48,24 +48,24 @@ fi
 
 echo -ne "Mounting file system to /mnt...\t\t\t"
 ERROR=$(mount /dev/sda1 /mnt 2>&1 1>/dev/null)
-check_returncode $? $ERROR
+check_returncode $? "$ERROR"
 
 # Section: Installation
 
 echo -ne "Downloading current mirrorlist...\t\t"
 ERROR=$(curl --silent "https://www.archlinux.org/mirrorlist/?country=all&protocol=http&protocol=https&ip_version=4" | sed 's/#Server/Server/' > /etc/pacman.d/mirrorlist)
-check_returncode $? $ERROR
+check_returncode $? "$ERROR"
 
 echo -ne "Installing essential packages...\t\t"
 ERROR=$(pacstrap /mnt $(cat packagelist) 2>&1 1>/dev/null)
 #ERROR=$(pacstrap /mnt base base linux linux-firmware grub 2>&1 1>/dev/null)
-check_returncode $? $ERROR
+check_returncode $? "$ERROR"
 
 # Section: Configure the system
 
 echo -ne "Generating an fstab file...\t\t\t"
 ERROR=$(genfstab -U /mnt 2>&1 1>>/mnt/etc/fstab)
-check_returncode $? $ERROR
+check_returncode $? "$ERROR"
 
 # Subsection: Chroot
 
