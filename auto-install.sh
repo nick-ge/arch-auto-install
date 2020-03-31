@@ -27,7 +27,7 @@ check_returncode() {
 }
 
 echo -e "\n$HORIZONTALE"
-echo -e "\t    Arch Linux Installation Script"
+echo -e "\t   Arch Linux Installation Script"
 echo -e "$HORIZONTALE\n"
 
 # Section: Pre-Installation
@@ -72,8 +72,9 @@ check_returncode $? $ERROR
 mkdir /mnt/root/.ssh
 cp /root/.ssh/id_rsa /mnt/root/.ssh/.
 
-cp chrooted/chrooted.sh /mnt/root/.
-chmod +x /mnt/root/chrooted.sh
+cp -r chrooted/ /mnt/root/.
+chmod +x /mnt/root/chrooted/chrooted.sh
+chmod +x /mnt/root/chrooted/creater_user.sh
 
 arch-chroot /mnt /root/chrooted.sh 2>&1
 
