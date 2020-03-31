@@ -14,7 +14,7 @@ check_returncode() {
 }
 
 echo -e "\n$SUBHORIZONTALE"
-echo -e "     Chrooting into new system"
+echo -e " Chrooting into new system"
 echo -e "$SUBHORIZONTALE\n"
 
 ## Subsection: Time zone

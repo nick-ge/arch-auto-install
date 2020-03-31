@@ -27,7 +27,7 @@ check_returncode() {
 }
 
 echo -e "\n$HORIZONTALE"
-echo -e "\t\t\tArch Linux Installation Script"
+echo -e "\t    Arch Linux Installation Script"
 echo -e "$HORIZONTALE\n"
 
 # Section: Pre-Installation

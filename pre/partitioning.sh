@@ -14,7 +14,7 @@ check_returncode() {
 }
 
 echo -e "\n$SUBHORIZONTALE"
-echo -e "\tPartitioning"
+echo -e "       Partitioning"
 echo -e "$SUBHORIZONTALE\n"
 
 if [ -f pre/partition-table.conf ]; then
