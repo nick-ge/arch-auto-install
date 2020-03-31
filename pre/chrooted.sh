@@ -1,7 +1,6 @@
 #!/bin/sh
 
-HORIZONTALE="========================================================================"
-SUBHORIZONTALE="===================================="
+SUBHORIZONTALE="==========================="
 
 check_returncode() {
     local RETURN=${1} ERRORTEXT=${2}
@@ -56,7 +55,10 @@ check_returncode $? $ERROR
 ## Subsection: Root password
 echo "Root password needed"
 passwd
-check_returncode $? "Setting root password failed"
+if [ $? -ne 0 ]; then
+    echo "Setting root password failed" >&2
+    exit 1
+fi
 
 ## Subsection: Boot loader
 echo -ne "Installing grub...\t\t\t\t"

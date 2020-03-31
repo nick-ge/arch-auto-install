@@ -1,7 +1,6 @@
 #!/bin/sh
 
-HORIZONTALE="========================================================================"
-SUBHORIZONTALE="===================================="
+SUBHORIZONTALE="==========================="
 
 check_returncode() {
     local RETURN=${1} ERRORTEXT=${2}
