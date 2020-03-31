@@ -56,6 +56,7 @@ check_returncode $? $ERROR
 ## Subsection: Root password
 echo "Root password needed"
 passwd
+check_returncode $? "Setting root password failed"
 
 ## Subsection: Boot loader
 echo -ne "Installing grub...\t\t\t\t"
