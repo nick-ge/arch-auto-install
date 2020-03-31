@@ -71,7 +71,7 @@ check_returncode $? $ERROR
 
 /root/chrooted/create_user.sh
 if [ $? -eq 0 ]; then
-    echo "=> Creating user finished successfully\n"
+    echo -e "=> Creating user finished successfully\n"
 else
     echo "=> Creating user failed" >&2
     exit 1
