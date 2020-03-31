@@ -11,6 +11,7 @@ check_returncode() {
         echo "OK"
         return 0
     else
+        echo "ERROR"
         echo "${ERRORTEXT}" >&2
         exit $RETURN
     fi
