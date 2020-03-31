@@ -58,7 +58,8 @@ check_returncode $? $ERROR
 
 ## Subsection: Install essential packages
 echo -ne "Installing essential packages...\t\t"
-ERROR=$(pacstrap /mnt $(cat pre/packagelist) 2>&1 1>/dev/null)
+#ERROR=$(pacstrap /mnt $(cat pre/packagelist) 2>&1 1>/dev/null)
+ERROR=$(pacstrap /mnt base base linux linux-firmware 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 # Section: Configure the system
@@ -72,11 +73,13 @@ check_returncode $? $ERROR
 
 cp pre/chrooted.sh /mnt/root/.
 chmod +x /mnt/root/chrooted.sh
-echo "Chrooting into new system..."
 arch-chroot /mnt /root/chrooted.sh
 
 if [ $? -eq 0 ]; then
-    echo "=> Arch base installation successfully finished"
+    echo -e "=> Chrooted configuration successfully finished\n"
 else
-    echo "=> Arch base installation failed"
+    echo -e "=> Chrooted configuration failed" >&2
+    exit 1
 fi
+
+echo -e "=> Arch base installation finished!"

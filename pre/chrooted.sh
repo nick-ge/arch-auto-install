@@ -1,17 +1,22 @@
 #!/bin/sh
 
+HORIZONTALE="========================================================================"
+SUBHORIZONTALE="===================================="
+
 check_returncode() {
     local RETURN=${1} ERRORTEXT=${2}
     if [ $RETURN -eq 0 ]; then
         echo "OK"
         return 0
     else
-        echo "ERROR"
-        echo -e "\n${ERROR}"
-        echo "=> ERROR: Installation process aborted"
+        echo "${ERRORTEXT}" >&2
         exit $RETURN
     fi
 }
+
+echo -e "\n$SUBHORIZONTALE"
+echo -e "     Chrooting into new system"
+echo -e "$SUBHORIZONTALE\n"
 
 ## Subsection: Time zone
 echo -ne "Setting time zone...\t\t\t\t"
@@ -61,5 +66,4 @@ echo -ne "Generating main config...\t\t\t"
 ERROR=$(grub-mkconfig -o /boot/grub/grub.cfg 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
-echo "=> Chrooted installation process successfully finished"
 exit 0

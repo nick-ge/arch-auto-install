@@ -3,9 +3,6 @@
 HORIZONTALE="========================================================================"
 SUBHORIZONTALE="===================================="
 
-# Util function which gets invoked after every command.
-# It checks the given return code and prints the error message and the
-# respective return code in case of an error.
 check_returncode() {
     local RETURN=${1} ERRORTEXT=${2}
     if [ $RETURN -eq 0 ]; then
@@ -53,3 +50,4 @@ else
 fi
 
 exit 0
+
