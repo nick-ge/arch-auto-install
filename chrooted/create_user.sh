@@ -18,7 +18,7 @@ check_returncode() {
 
 
 echo -e "\n$SUBHORIZONTALE"
-echo -e " Creating User"
+echo -e "       Creating User"
 echo -e "$SUBHORIZONTALE\n"
 
 read -p "Enter username [default: nick]: " username
@@ -26,7 +26,7 @@ if [ "$username" = "" ]; then
     username="nick"
 fi
 
-echo -ne "Adding user ${username}...\t\t\t"
+echo -ne "Adding user ${username}...\t\t\t\t"
 ERROR=$(useradd -m -G $GROUPS -s $SHELL $username 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
