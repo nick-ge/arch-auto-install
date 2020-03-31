@@ -4,7 +4,7 @@
 # specific device.
 # Bases on https://wiki.archlinux.org/index.php/Installation_guide
 
-HORIZONTALE="====================================================="
+HORIZONTALE="==================================================="
 SUBHORIZONTALE="==========================="
 
 # Common variable for storing return texts of certain commands

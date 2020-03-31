@@ -2,6 +2,8 @@
 
 SUBHORIZONTALE="==========================="
 
+PART_INSTR="partitioning/partition-table.conf"
+
 check_returncode() {
     local RETURN=${1} ERRORTEXT=${2}
     if [ $RETURN -eq 0 ]; then
@@ -17,11 +19,11 @@ echo -e "\n$SUBHORIZONTALE"
 echo -e "       Partitioning"
 echo -e "$SUBHORIZONTALE\n"
 
-if [ -f partitioning/partition-table.conf ]; then
+if [ -f "$PART_INSTR" ]; then
 
     echo -ne "Applying partition instructions...\t\t"
     # sfdisk is a "scriptable" version of fdisk, it receives the "user input" from stdin.
-    ERROR=$(cat pre/partition-table.conf | sfdisk /dev/sda 2>&1 1>/dev/null)
+    ERROR=$(cat $PART_INSTR | sfdisk /dev/sda 2>&1 1>/dev/null)
     check_returncode $? $ERROR
 
     echo -ne "Verifying Partition table...\t\t\t"
@@ -44,7 +46,7 @@ if [ -f partitioning/partition-table.conf ]; then
 
 else
     RETURN=$?
-    echo "partitioning/partition-table.conf not found" >&2
+    echo "${PART_INSTR} not found" >&2
     exit $RETURN
 fi
 
