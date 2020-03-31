@@ -76,7 +76,7 @@ cp -r chrooted/ /mnt/root/.
 chmod +x /mnt/root/chrooted/chrooted.sh
 chmod +x /mnt/root/chrooted/creater_user.sh
 
-arch-chroot /mnt /root/chrooted.sh 2>&1
+arch-chroot /mnt /root/chrooted/chrooted.sh 2>&1
 
 if [ $? -eq 0 ]; then
     echo -e "=> Chrooted configuration successfully finished\n"
