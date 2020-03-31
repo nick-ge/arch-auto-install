@@ -36,7 +36,7 @@ echo -ne "Synchronizing system clock...\t\t\t"
 ERROR=$(timedatectl set-ntp true 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
-./pre/partitioning.sh
+./partitioning/partitioning.sh
 if [ $? -eq 0 ]; then
     echo -e "=> Partitioning successfully finished\n"
 else
@@ -45,36 +45,34 @@ else
 fi
 
 ## Subsection: Mounting the file system
+
 echo -ne "Mounting file system to /mnt...\t\t\t"
 ERROR=$(mount /dev/sda1 /mnt 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 # Section: Installation
 
-## Subsection: Select the mirror
 echo -ne "Downloading current mirrorlist...\t\t"
 ERROR=$(curl --silent "https://www.archlinux.org/mirrorlist/?country=all&protocol=http&protocol=https&ip_version=4" | sed 's/#Server/Server/' > /etc/pacman.d/mirrorlist)
 check_returncode $? $ERROR
 
-## Subsection: Install essential packages
 echo -ne "Installing essential packages...\t\t"
-ERROR=$(pacstrap /mnt $(cat pre/packagelist) 2>&1 1>/dev/null)
+ERROR=$(pacstrap /mnt $(cat packagelist) 2>&1 1>/dev/null)
 #ERROR=$(pacstrap /mnt base base linux linux-firmware grub 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 # Section: Configure the system
 
-## Subsection: fstab
 echo -ne "Generating an fstab file...\t\t\t"
 ERROR=$(genfstab -U /mnt 2>&1 1>>/mnt/etc/fstab)
 check_returncode $? $ERROR
 
-## Subsection: Chroot
+# Subsection: Chroot
 
-cp pre/chrooted.sh /mnt/root/.
-cp post/create_user.sh /mnt/root
-cp -r /root/.ssh /mnt/root/.
+mkdir /mnt/root/.ssh
+cp /root/.ssh/id_rsa /mnt/root/.ssh/.
 
+cp chrooted/chrooted.sh /mnt/root/.
 chmod +x /mnt/root/chrooted.sh
 arch-chroot /mnt /root/chrooted.sh 2>&1
 

@@ -24,7 +24,7 @@ echo -e "$SUBHORIZONTALE\n"
 read -p "Enter username [default: nick]: " username
 if [ "$username" = "" ]; then
     username="nick"
-else
+fi
 
 echo -ne "Adding user ${username}...\t\t\t"
 ERROR=$(useradd -m -G $GROUPS -s $SHELL $username 2>&1 1>/dev/null)
