@@ -17,7 +17,7 @@ echo -e "\n$SUBHORIZONTALE"
 echo -e "       Partitioning"
 echo -e "$SUBHORIZONTALE\n"
 
-if [ -f pre/partition-table.conf ]; then
+if [ -f partitioning/partition-table.conf ]; then
 
     echo -ne "Applying partition instructions...\t\t"
     # sfdisk is a "scriptable" version of fdisk, it receives the "user input" from stdin.
@@ -44,7 +44,7 @@ if [ -f pre/partition-table.conf ]; then
 
 else
     RETURN=$?
-    echo "pre/partition-table.conf not found" >&2
+    echo "partitioning/partition-table.conf not found" >&2
     exit $RETURN
 fi
 

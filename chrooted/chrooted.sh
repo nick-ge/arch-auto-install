@@ -69,4 +69,12 @@ echo -ne "Generating main config...\t\t\t"
 ERROR=$(grub-mkconfig -o /boot/grub/grub.cfg 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
+chrooted/create_user.sh
+if [ $? -eq 0 ]; then
+    echo "=> Creating user finished successfully\n"
+else
+    echo "=> Creating user failed" >&2
+    exit 1
+fi
+
 exit 0

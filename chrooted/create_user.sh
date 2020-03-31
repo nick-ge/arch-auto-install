@@ -31,7 +31,7 @@ ERROR=$(useradd -m -G $GROUPS -s $SHELL $username 2>&1 1>/dev/null)
 check_returncode $? $ERROR
 
 echo "Password needed for ${username}"
-passwd nick
+passwd $username
 if [ $? -ne 0 ]; then
     echo "Setting password for ${username} failed" >&2
     exit 1

@@ -74,6 +74,7 @@ cp /root/.ssh/id_rsa /mnt/root/.ssh/.
 
 cp chrooted/chrooted.sh /mnt/root/.
 chmod +x /mnt/root/chrooted.sh
+
 arch-chroot /mnt /root/chrooted.sh 2>&1
 
 if [ $? -eq 0 ]; then
