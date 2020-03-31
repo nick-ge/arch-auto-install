@@ -4,7 +4,7 @@
 # specific device.
 # Bases on https://wiki.archlinux.org/index.php/Installation_guide
 
-HORIZONTALE="==================================================="
+HORIZONTALE="=================================================="
 SUBHORIZONTALE="==========================="
 
 # Common variable for storing return texts of certain commands
@@ -74,7 +74,7 @@ cp /root/.ssh/id_rsa /mnt/root/.ssh/.
 
 cp -r chrooted/ /mnt/root/.
 chmod +x /mnt/root/chrooted/chrooted.sh
-chmod +x /mnt/root/chrooted/creater_user.sh
+chmod +x /mnt/root/chrooted/create_user.sh
 
 arch-chroot /mnt /root/chrooted/chrooted.sh 2>&1
 
