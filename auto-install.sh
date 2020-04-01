@@ -78,7 +78,7 @@ chmod +x /mnt/root/chrooted/*
 arch-chroot /mnt /root/chrooted/chrooted.sh 2>&1
 
 if [ $? -eq 0 ]; then
-    echo -e "=> Chrooted configuration successfully finished\n"
+    echo -e "=> Chrooted configuration successfully finished"
 else
     echo -e "=> Chrooted configuration failed" >&2
     exit 1

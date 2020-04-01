@@ -75,7 +75,7 @@ check_returncode $? "$ERROR"
 
 /root/chrooted/create_user.sh
 if [ $? -eq 0 ]; then
-    echo -e "=> Creating user finished successfully\n"
+    echo -e "=> Creating user finished successfully"
 else
     echo "=> Creating user failed" >&2
     exit 1
@@ -83,7 +83,7 @@ fi
 
 /root/chrooted/get_dotfiles.sh
 if [ $? -eq 0 ]; then
-    echo -e "=> Configuring dotfiles finished successfully\n"
+    echo -e "=> Configuring dotfiles finished successfully"
 else
     echo "=> Configuring dotfiles failed" >&2
     exit 1
