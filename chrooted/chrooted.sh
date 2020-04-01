@@ -28,7 +28,11 @@ check_returncode $? "$ERROR"
 
 ## Subsection: Localization
 echo -ne "Uncommenting needed locales...\t\t\t"
-ERROR=$(sed 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen 2>&1 1>/etc/locale.gen)
+ERROR=$(sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen 2>&1)
+check_returncode $? "$ERROR"
+
+echo -ne "Generating locales...\t\t\t"
+ERROR=$(locale-gen 2>&1 1>/dev/null)
 check_returncode $? "$ERROR"
 
 echo -ne "Creating /etc/locale.conf...\t\t\t"
@@ -36,7 +40,7 @@ echo "LANG=en_US.UTF-8" > /etc/locale.conf
 check_returncode $? "$ERROR"
 
 echo -ne "Making keyboard settings persistent...\t\t"
-echo "KEYMAP=de-latin1" > /etc/vconsole.conf
+echo "KEYMAP=de" > /etc/vconsole.conf
 check_returncode $? "$ERROR"
 
 ## Subsection: Network configuration
