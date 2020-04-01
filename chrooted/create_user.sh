@@ -2,7 +2,7 @@
 
 SUBHORIZONTALE="==========================="
 
-GROUPS="wheel,wireshark,tor,users"
+GROUPS="users,wheel,wireshark,tor"
 SHELL="/bin/zsh"
 
 check_returncode() {
@@ -28,7 +28,7 @@ if [ "$username" = "" ]; then
 fi
 
 echo -ne "Adding user ${username}...\t\t\t\t"
-ERROR=$(useradd -m -G $GROUPS -s $SHELL $username 2>&1 1>/dev/null)
+ERROR=$(useradd -m -G "$GROUPS" -s $SHELL $username 2>&1 1>/dev/null)
 check_returncode $? "$ERROR"
 
 echo "Password needed for ${username}"
