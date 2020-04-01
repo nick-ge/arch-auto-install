@@ -81,4 +81,12 @@ else
     exit 1
 fi
 
+/root/chrooted/get_dotfiles.sh
+if [ $? -eq 0 ]; then
+    echo -e "=> Configuring dotfiles finished successfully\n"
+else
+    echo "=> Configuring dotfiles failed" >&2
+    exit 1
+fi
+
 exit 0
