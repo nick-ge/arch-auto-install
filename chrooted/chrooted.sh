@@ -31,7 +31,7 @@ echo -ne "Uncommenting needed locales...\t\t\t"
 ERROR=$(sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen 2>&1)
 check_returncode $? "$ERROR"
 
-echo -ne "Generating locales...\t\t\t"
+echo -ne "Generating locales...\t\t\t\t"
 ERROR=$(locale-gen 2>&1 1>/dev/null)
 check_returncode $? "$ERROR"
 
