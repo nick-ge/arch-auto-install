@@ -35,21 +35,21 @@ rt=$?
 
 if [ $rt -eq 0 ] && [ -d "dot-files" ]; then
 
-    echo -n "Copying git directory...\t\t\t"
+    echo -ne "Copying git directory...\t\t\t"
     ERROR=$(cp -r /root/dot-files/.git /home/nick/.dotfiles.git 2>&1 1>/dev/null)
     check_returncode $? "$ERROR"
 
     # Active globbing on hidden-/dotfiles
     shopt -s dotglob
 
-    echo -n "Moving dotfiles to home...\t\t\t"
+    echo -ne "Moving dotfiles to home...\t\t\t"
     ERROR=$(mv /root/dot-files/* /home/nick/. 2>&1 1>/dev/null)
     check_returncode $? "$ERROR"
 
     # Deactive globbing
     shopt -u dotglob
 
-    echo -n "Removing repository from root...\t\t"
+    echo -ne "Removing repository from root...\t\t"
     ERROR=$(rm -r /root/dot-files 2>&1 1>/dev/null)
     check_returncode $? "$ERROR"
 
