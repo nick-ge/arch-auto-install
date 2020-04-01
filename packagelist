@@ -4,6 +4,7 @@ base
 bluez-utils
 calibre
 chromium
+compton
 dhcpcd
 dmenu
 feh
@@ -14,7 +15,6 @@ grub
 htop
 i3-gaps
 i3lock
-intel-ucode
 isync
 keepass
 libnotify
@@ -52,6 +52,8 @@ wget
 wireshark-cli
 wireshark-qt
 wol
+xorg-server
+xorg-xinit
 zathura
 zip
 zsh

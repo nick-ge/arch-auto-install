@@ -7,12 +7,12 @@
 HORIZONTALE="=================================================="
 SUBHORIZONTALE="==========================="
 
-# Common variable for storing return texts of certain commands
+# Common variable for storing stderr output of certain commands
 ERROR=""
 
 # Util function which gets invoked after every command.
 # It checks the given return code and prints the error message and the
-# respective return code in case of an error.
+# respective return code of the corresponding command.
 check_returncode() {
     local RETURN=${1} ERRORTEXT=${2}
     if [ $RETURN -eq 0 ]; then
@@ -73,8 +73,7 @@ mkdir /mnt/root/.ssh
 cp /root/.ssh/id_rsa /mnt/root/.ssh/.
 
 cp -r chrooted/ /mnt/root/.
-chmod +x /mnt/root/chrooted/chrooted.sh
-chmod +x /mnt/root/chrooted/create_user.sh
+chmod +x /mnt/root/chrooted/*
 
 arch-chroot /mnt /root/chrooted/chrooted.sh 2>&1
 
