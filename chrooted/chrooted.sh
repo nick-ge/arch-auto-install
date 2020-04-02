@@ -53,6 +53,10 @@ echo -ne "Add entry to hosts...\t\t\t\t"
 ERROR=$(echo -e "127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.0.1\t${hostname}.localdomain ${hostname}" >> /etc/hosts)
 check_returncode $? "$ERROR"
 
+echo -ne "Enabling wheel in sudoers...\t\t"
+ERROR=$(sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers 2>&1)
+check_returncode $? "$ERROR"
+
 ## Subsection: Initramfs
 ## Needed later when encrypting hard drives
 

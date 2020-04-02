@@ -15,15 +15,15 @@ check_returncode() {
 
 install_aurpkg() {
     # Saving URL to repository in a variable and using awk to extract the 'folder' name
-    local REPO=${1} 
+    local REPO=${1}
     local NAME=$(echo "$REPO" | awk -F '/' '{print $5}')
-    
-    echo -ne "Cloning '$NAME'...\t" 
-    ERROR=$(git clone "$repo" ~/"$NAME")
+
+    echo -ne "Cloning '$NAME'...\t"
+    ERROR=$(git clone "$REPO" ~/"$NAME" 2>&1 1>/dev/null)
     check_returncode $? "$ERROR"
-   
-    echo -ne "Installing '$NAME'...\t" 
-    ERROR=$(makepkg -ir ~/"$NAME")
+
+    echo -ne "Installing '$NAME'...\t"
+    ERROR=$(makepkg -is --nocolor --no-confirm)
     check_returncode $? "$ERROR"
     return $?
 }
@@ -32,8 +32,8 @@ echo -e "\n$SUBHORIZONTALE"
 echo -e "\tAUR Packages"
 echo -e "$SUBHORIZONTALE\n"
 
-#install_aurpkg "https://github.com/zsh-users/zsh-syntax-highlighting"
-install_aurpkg "https://github.com/polybar/polybar"
+install_aurpkg "https://aur.archlinux.org/zsh-syntax-highlighting-git.git"
+install_aurpkg "https://aur.archlinux.org/polybar.git"
 
 
 
