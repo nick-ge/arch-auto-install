@@ -1,6 +1,9 @@
 #!/bin/sh
 
 SUBHORIZONTALE="==========================="
+
+PUB_KEYS=("EB774491D9FF06E2")
+
 AUR_REPOS=("https://aur.archlinux.org/zsh-syntax-highlighting-git.git" \
            "https://aur.archlinux.org/polybar.git" \
            "https://aur.archlinux.org/tor-browser.git" \
@@ -18,8 +21,15 @@ check_returncode() {
     else
         echo "ERROR"
         echo "${ERRORTEXT}" >&2
-        exit $RETURN
+        return $RETURN
     fi
+}
+
+import_key() {
+    KEY=$1
+    echo -ne "Importing public key '$KEY'..."
+    ERROR=$(gpp --recv-keys "$KEY" 2>&1 1>/dev/null)
+    check_returncode $? "$ERROR"
 }
 
 install_aurpkg() {
@@ -46,6 +56,10 @@ install_aurpkg() {
 echo -e "\n$SUBHORIZONTALE"
 echo -e "\tAUR Packages"
 echo -e "$SUBHORIZONTALE\n"
+
+for key in "${PUB_KEYS[@]}"; do
+    import_key "$key"
+done
 
 for repo in "${AUR_REPOS[@]}"; do
     install_aurpkg "$repo"
