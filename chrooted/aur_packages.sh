@@ -35,8 +35,10 @@ install_aurpkg() {
     ERROR=$(git clone "$REPO" /home/nick/workspace/arch/"$NAME" 2>&1 1>/dev/null)
     check_returncode $? "$ERROR"
 
+    cd /home/nick/workspace/arch/"$NAME"
+      
     echo -ne "Installing '$NAME'...\t"
-    ERROR=$(makepkg -is --nocolor --noconfirm)
+    ERROR=$(makepkg -isc --nocolor --noconfirm)
     check_returncode $? "$ERROR"
     return $?
 }
