@@ -9,7 +9,6 @@ AUR_REPOS=("https://aur.archlinux.org/zsh-syntax-highlighting-git.git" \
            "https://aur.archlinux.org/ttf-material-icons-git.git" \
            "https://aur.archlinux.org/ttf-dejavu-sans-code.git " \
            "https://aur.archlinux.org/noto-fonts-sc.git")
-          
 
 check_returncode() {
     local RETURN=${1} ERRORTEXT=${2}
