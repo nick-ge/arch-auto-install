@@ -27,13 +27,17 @@ install_aurpkg() {
     # Saving URL to repository in a variable and using awk to extract the 'folder' name
     REPO=${1}
     NAME=$(echo "$REPO" | awk -F '/' '{print $4}')
+    
+    if [ ! -d /home/nick/workspace/arch ]; then
+        mkdir -p /home/nick/workspace/arch
+    fi
 
     echo -ne "Cloning '$NAME'...\t"
-    ERROR=$(git clone "$REPO" ~/"$NAME" 2>&1 1>/dev/null)
+    ERROR=$(git clone "$REPO" /home/nick/workspace/arch/"$NAME" 2>&1 1>/dev/null)
     check_returncode $? "$ERROR"
 
     echo -ne "Installing '$NAME'...\t"
-    ERROR=$(makepkg -is --nocolor --no-confirm)
+    ERROR=$(makepkg -is --nocolor --noconfirm)
     check_returncode $? "$ERROR"
     return $?
 }
@@ -43,7 +47,6 @@ echo -e "\tAUR Packages"
 echo -e "$SUBHORIZONTALE\n"
 
 for repo in "${AUR_REPOS[@]}"; do
-    echo $repo
     install_aurpkg "$repo"
 done
 
