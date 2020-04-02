@@ -26,7 +26,7 @@ check_returncode() {
 install_aurpkg() {
     # Saving URL to repository in a variable and using awk to extract the 'folder' name
     REPO=${1}
-    NAME=$(echo "$REPO" | awk -F '/' '{print $5}')
+    NAME=$(echo "$REPO" | awk -F '/' '{print $4}')
 
     echo -ne "Cloning '$NAME'...\t"
     ERROR=$(git clone "$REPO" ~/"$NAME" 2>&1 1>/dev/null)
