@@ -19,18 +19,11 @@ echo -e "$SUBHORIZONTALE\n"
 
 
 echo -ne "Retrieving public key from GitHub...\t\t"
-ssh-keyscan -t rsa github.com 1> ~/.ssh/known_hosts 2>/dev/null
-rt=$?
-
-if [ $rt -eq 0 ]; then
-    echo "OK"
-else
-    echo -e "ERROR\n"
-    exit $rt
-fi
+ERROR=$(ssh-keyscan -t rsa github.com 2>&1 1> ~/.ssh/known_hosts)
+check_returncode $? "$ERROR"
 
 echo -e "\nCloning repository 'nick-ge/dot-files'..."
-ERROR=$(git clone -q git@github.com:nick-ge/dot-files.git /root/. 2>&1)
+ERROR=$(git clone -q git@github.com:nick-ge/dot-files.git /root/dot-files 2>&1)
 rt=$?
 
 if [ $rt -eq 0 ] && [ -d "/root/dot-files" ]; then
@@ -46,19 +39,22 @@ if [ $rt -eq 0 ] && [ -d "/root/dot-files" ]; then
     ERROR=$(mv /root/dot-files/* /home/nick/. 2>&1 1>/dev/null)
     check_returncode $? "$ERROR"
 
-    # Deactive globbing
-    shopt -u dotglob
-
     echo -ne "Removing repository from root...\t\t"
     ERROR=$(rm -r /root/dot-files 2>&1 1>/dev/null)
     check_returncode $? "$ERROR"
 
-    echo -ne "Creating 'exclude' file...\t\t"
+    echo -ne "Creating 'exclude' file...\t\t\t"
     ERROR=$(echo "*" >> /home/nick/.dotfiles.git/info/exclude 2>&1 1>/dev/null)
     check_returncode $? "$ERROR"
 
+    echo -ne "Changing owner to nick...\t"
+    ERROR=$(chown -R nick:users /home/nick/* 2>&1 1>/dev/null)
+    check_returncode $? "$ERROR"
+
+    # Deactive globbing
+    shopt -u dotglob
 else
-    echo -e "=> Cloning failed!"
+    echo -e "=> Something went wrong while cloning!"
     echo "$ERROR" >&2
     exit $rt
 fi
