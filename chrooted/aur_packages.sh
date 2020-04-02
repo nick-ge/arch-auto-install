@@ -15,7 +15,8 @@ check_returncode() {
 
 install_aurpkg() {
     # Saving URL to repository in a variable and using awk to extract the 'folder' name
-    local REPO={1} NAME=$(echo "$REPO" | awk -F '/' '{print $5}')
+    local REPO=${1} 
+    local NAME=$(echo "$REPO" | awk -F '/' '{print $5}')
     
     echo -ne "Cloning '$NAME'...\t" 
     ERROR=$(git clone "$repo" ~/"$NAME")
@@ -31,7 +32,8 @@ echo -e "\n$SUBHORIZONTALE"
 echo -e "\tAUR Packages"
 echo -e "$SUBHORIZONTALE\n"
 
-install_aurpkg "https://github.com/zsh-users/zsh-syntax-highlighting"
+#install_aurpkg "https://github.com/zsh-users/zsh-syntax-highlighting"
+install_aurpkg "https://github.com/polybar/polybar"
 
 
 
