@@ -28,7 +28,7 @@ check_returncode() {
 import_key() {
     KEY=$1
     echo -ne "Importing public key '$KEY'..."
-    ERROR=$(gpp --recv-keys "$KEY" 2>&1 1>/dev/null)
+    ERROR=$(gpg --recv-keys "$KEY" 2>&1 1>/dev/null)
     check_returncode $? "$ERROR"
 }
 
