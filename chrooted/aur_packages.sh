@@ -1,6 +1,15 @@
 #!/bin/sh
 
 SUBHORIZONTALE="==========================="
+AUR_REPOS=("https://aur.archlinux.org/zsh-syntax-highlighting-git.git" \
+           "https://aur.archlinux.org/polybar.git" \
+           "https://aur.archlinux.org/tor-browser.git" \
+           "https://aur.archlinux.org/vim-plug.git" \
+           "https://aur.archlinux.org/ttf-font-awesome-4.git" \
+           "https://aur.archlinux.org/ttf-material-icons-git.git" \
+           "https://aur.archlinux.org/ttf-dejavu-sans-code.git " \
+           "https://aur.archlinux.org/noto-fonts-sc.git")
+          
 
 check_returncode() {
     local RETURN=${1} ERRORTEXT=${2}
@@ -32,8 +41,9 @@ echo -e "\n$SUBHORIZONTALE"
 echo -e "\tAUR Packages"
 echo -e "$SUBHORIZONTALE\n"
 
-install_aurpkg "https://aur.archlinux.org/zsh-syntax-highlighting-git.git"
-install_aurpkg "https://aur.archlinux.org/polybar.git"
+for repo in "${AUR_REPOS[@]}"; do
+    install_aurpkg "$repo"
+done
 
 
 
