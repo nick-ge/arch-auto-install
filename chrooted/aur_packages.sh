@@ -32,13 +32,13 @@ install_aurpkg() {
     fi
 
     echo -ne "Cloning '$NAME'...\t"
-    ERROR=$(git clone "$REPO" /home/nick/workspace/arch/"$NAME" 2>&1 1>/dev/null)
+    ERROR=$(git clone -q "$REPO" /home/nick/workspace/arch/"$NAME" 2>&1)
     check_returncode $? "$ERROR"
 
     cd /home/nick/workspace/arch/"$NAME"
       
     echo -ne "Installing '$NAME'...\t"
-    ERROR=$(makepkg -isc --nocolor --noconfirm)
+    ERROR=$(makepkg -isc --nocolor --noconfirm 2>&1 1>/dev/null)
     check_returncode $? "$ERROR"
     return $?
 }
