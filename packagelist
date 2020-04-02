@@ -1,6 +1,7 @@
 archiso
 ascii
 base
+base-devel
 bluez-utils
 calibre
 chromium
@@ -8,6 +9,7 @@ compton
 dhcpcd
 dmenu
 feh
+firefox
 flameshot
 gcc
 git
@@ -54,6 +56,7 @@ wireshark-qt
 wol
 xorg-server
 xorg-xinit
+xorg-xrandr
 zathura
 zip
 zsh

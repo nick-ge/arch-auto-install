@@ -10,7 +10,7 @@ AUR_REPOS=("https://aur.archlinux.org/zsh-syntax-highlighting-git.git" \
            "https://aur.archlinux.org/vim-plug.git" \
            "https://aur.archlinux.org/ttf-font-awesome-4.git" \
            "https://aur.archlinux.org/ttf-material-icons-git.git" \
-           "https://aur.archlinux.org/ttf-dejavu-sans-code.git " \
+           "https://aur.archlinux.org/ttf-dejavu-sans-code.git" \
            "https://aur.archlinux.org/noto-fonts-sc.git")
 
 check_returncode() {
@@ -65,5 +65,4 @@ for repo in "${AUR_REPOS[@]}"; do
     install_aurpkg "$repo"
 done
 
-
-
+exit 0
