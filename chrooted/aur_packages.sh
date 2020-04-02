@@ -24,8 +24,8 @@ check_returncode() {
 
 install_aurpkg() {
     # Saving URL to repository in a variable and using awk to extract the 'folder' name
-    local REPO=${1}
-    local NAME=$(echo "$REPO" | awk -F '/' '{print $5}')
+    REPO=${1}
+    NAME=$(echo "$REPO" | awk -F '/' '{print $5}')
 
     echo -ne "Cloning '$NAME'...\t"
     ERROR=$(git clone "$REPO" ~/"$NAME" 2>&1 1>/dev/null)
@@ -42,6 +42,7 @@ echo -e "\tAUR Packages"
 echo -e "$SUBHORIZONTALE\n"
 
 for repo in "${AUR_REPOS[@]}"; do
+    echo $repo
     install_aurpkg "$repo"
 done
 
