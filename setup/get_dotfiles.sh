@@ -26,7 +26,7 @@ echo -e "\nCloning repository 'nick-ge/dot-files'..."
 ERROR=$(git clone -q git@github.com:nick-ge/dot-files.git ~/dot-files 2>&1)
 rt=$?
 
-if [ $rt -eq 0 ] && [ -d "/root/dot-files" ]; then
+if [ $rt -eq 0 ] && [ -d "~/dot-files" ]; then
 
     echo -ne "Copying git directory...\t\t\t"
     ERROR=$(cp -r ~/dot-files/.git ~/.dotfiles.git 2>&1 1>/dev/null)
