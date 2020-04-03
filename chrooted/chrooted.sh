@@ -8,6 +8,7 @@ check_returncode() {
         echo "OK"
         return 0
     else
+        echo "ERROR"
         echo "${ERRORTEXT}" >&2
         exit $RETURN
     fi
@@ -43,9 +44,9 @@ echo -ne "Making keyboard settings persistent...\t\t"
 echo "KEYMAP=de" > /etc/vconsole.conf
 check_returncode $? "$ERROR"
 
-echo -ne "Setting X11 keyboard layout...\t\t"
-ERROR=$(localectl set-x11-keymap de 2>&1 1>/dev/null)
-check_returncode $? "$ERROR"
+#echo -ne "Setting X11 keyboard layout...\t\t"
+#ERROR=$(localectl set-x11-keymap de 2>&1 1>/dev/null)
+#check_returncode $? "$ERROR"
 
 ## Subsection: Network configuration
 read -p "Enter hostname: " hostname
