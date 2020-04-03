@@ -83,6 +83,9 @@ cp -r setup/* /mnt/home/nick/.local/
 chmod +x /mnt/home/nick/.local/setup/*
 chown -R nick:users /mnt/home/nick/.local/setup
 
+cp -r /root/.ssh /mnt/home/nick/.
+chown -R nick:users /mnt/home/nick/.ssh/
+
 arch-chroot /mnt /home/nick/.local/setup/setup_user.sh 2>&1
 if [ $? -eq 0 ]; then
     echo -e "=> Setting up user environmet sucessfully finished"
