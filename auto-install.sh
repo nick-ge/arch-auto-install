@@ -64,12 +64,11 @@ ERROR=$(genfstab -U /mnt 2>&1 1>>/mnt/etc/fstab)
 check_returncode $? "$ERROR"
 
 # Chrooting
+mkdir -p /mnt/root/.local/
+cp -r chrooted/ /mnt/root/.local/.
+chmod +x /mnt/root/.local/chrooted/*
 
-# You re on chroot now
-cp -r chrooted/ /mnt/root.
-chmod +x /mnt/root/chrooted/*
-
-arch-chroot /mnt /root/chrooted/chrooted.sh 2>&1
+arch-chroot /mnt /root/.local/chrooted.sh 2>&1
 if [ $? -eq 0 ]; then
     echo -e "=> Chrooted configuration successfully finished"
 else
@@ -79,12 +78,11 @@ fi
 
 # Setting up user environment
 ## This part should depend on specific commandline argument
-cp -r setup/ /mnt/root/.
-chmod +x /mnt/root/setup/*
-cp -r /root/.ssh /mnt/home/nick/.
-chown -R nick:users /mnt/home/nick/*
+mkdir -p /home/nick/.local/
+cp -r setup/* /mnt/home/nick/.local/
+chmod +x /mnt/home/nick/.local/setup/*
 
-arch-chroot /mnt /root/setup/setup_user.sh 2>&1
+arch-chroot /mnt /home/nick/.local/setup/setup_user.sh 2>&1
 if [ $? -eq 0 ]; then
     echo -e "=> Setting up user environmet sucessfully finished"
 else
