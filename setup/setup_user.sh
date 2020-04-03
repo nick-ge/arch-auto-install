@@ -1,5 +1,8 @@
 #!/bin/sh
 
+chown -R nick:users /mnt/home/nick/.local/setup/
+chown -R nick:users /mnt/home/nick/.ssh/
+
 su nick -c /home/nick/.local/setup/get_dotfiles.sh
 if [ $? -eq 0 ]; then
     echo -e "=> Configuring dotfiles finished successfully"
