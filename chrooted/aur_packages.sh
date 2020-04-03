@@ -36,7 +36,7 @@ install_aurpkg() {
     # Saving URL to repository in a variable and using awk to extract the 'folder' name
     REPO=${1}
     NAME=$(echo "$REPO" | awk -F '/' '{print $4}')
-    
+
     if [ ! -d /home/nick/workspace/arch ]; then
         mkdir -p /home/nick/workspace/arch
     fi
@@ -46,9 +46,9 @@ install_aurpkg() {
     check_returncode $? "$ERROR"
 
     cd /home/nick/workspace/arch/"$NAME"
-      
+
     echo -ne "Installing '$NAME'...\t"
-    ERROR=$(makepkg -isc --nocolor --noconfirm 2>&1 1>/dev/null)
+    ERROR=$(makepkg -risc --nocolor --noconfirm --needed 2>&1 1>/dev/null)
     check_returncode $? "$ERROR"
     return $?
 }

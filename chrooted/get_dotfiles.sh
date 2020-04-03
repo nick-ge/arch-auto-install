@@ -44,7 +44,7 @@ if [ $rt -eq 0 ] && [ -d "/root/dot-files" ]; then
     check_returncode $? "$ERROR"
 
     echo -ne "Creating 'exclude' file...\t\t\t"
-    ERROR=$(echo "*" >> /home/nick/.dotfiles.git/info/exclude 2>&1 1>/dev/null)
+    ERROR=$(echo "*" 2>&1 1>>/home/nick/.dotfiles.git/info/exclude)
     check_returncode $? "$ERROR"
 
     echo -ne "Changing owner to nick...\t"

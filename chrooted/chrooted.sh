@@ -43,6 +43,10 @@ echo -ne "Making keyboard settings persistent...\t\t"
 echo "KEYMAP=de" > /etc/vconsole.conf
 check_returncode $? "$ERROR"
 
+echo -ne "Setting X11 keyboard layout...\t\t"
+ERROR=$(localectl set-x11-keymap de 2>&1 1>/dev/null)
+check_returncode $? "$ERROR"
+
 ## Subsection: Network configuration
 read -p "Enter hostname: " hostname
 echo -ne "Creating hostname file...\t\t\t"
@@ -56,6 +60,7 @@ check_returncode $? "$ERROR"
 echo -ne "Enabling wheel in sudoers...\t\t"
 ERROR=$(sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers 2>&1)
 check_returncode $? "$ERROR"
+
 
 ## Subsection: Initramfs
 ## Needed later when encrypting hard drives
@@ -90,6 +95,14 @@ if [ $? -eq 0 ]; then
     echo -e "=> Configuring dotfiles finished successfully"
 else
     echo "=> Configuring dotfiles failed" >&2
+    exit 1
+fi
+
+/root/chrooted/aur_packages.sh
+if [ $? -eq 0 ]; then
+    echo -ne "=> Installing AUR Packages finished successfully"
+else
+    echo "=> Installing AUR Packages failed" >&2
     exit 1
 fi
 
