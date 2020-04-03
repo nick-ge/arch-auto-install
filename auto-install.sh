@@ -68,7 +68,7 @@ mkdir -p /mnt/root/.local/
 cp -r chrooted/ /mnt/root/.local/.
 chmod +x /mnt/root/.local/chrooted/*
 
-arch-chroot /mnt /root/.local/chrooted.sh 2>&1
+arch-chroot /mnt /root/.local/chrooted/chrooted.sh 2>&1
 if [ $? -eq 0 ]; then
     echo -e "=> Chrooted configuration successfully finished"
 else
@@ -81,6 +81,7 @@ fi
 mkdir -p /home/nick/.local/
 cp -r setup/* /mnt/home/nick/.local/
 chmod +x /mnt/home/nick/.local/setup/*
+chown -R nick:users /mnt/home/nick/.local/setup
 
 arch-chroot /mnt /home/nick/.local/setup/setup_user.sh 2>&1
 if [ $? -eq 0 ]; then

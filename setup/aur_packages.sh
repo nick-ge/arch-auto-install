@@ -57,9 +57,9 @@ echo -e "\n$SUBHORIZONTALE"
 echo -e "\tAUR Packages"
 echo -e "$SUBHORIZONTALE\n"
 
-for key in "${PUB_KEYS[@]}"; do
-    import_key "$key"
-done
+#for key in "${PUB_KEYS[@]}"; do
+#    import_key "$key"
+#done
 
 for repo in "${AUR_REPOS[@]}"; do
     install_aurpkg "$repo"
