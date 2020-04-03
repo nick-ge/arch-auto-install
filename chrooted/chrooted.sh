@@ -18,7 +18,6 @@ echo -e "\n$SUBHORIZONTALE"
 echo -e " Chrooting into new system"
 echo -e "$SUBHORIZONTALE\n"
 
-## Subsection: Time zone
 echo -ne "Setting time zone...\t\t\t\t"
 ERROR=$(ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime 2>&1 1>/dev/null)
 check_returncode $? "$ERROR"
@@ -27,7 +26,6 @@ echo -ne "Syncing hardware clock...\t\t\t"
 ERROR=$(hwclock --systohc 2>&1 1>/dev/null)
 check_returncode $? "$ERROR"
 
-## Subsection: Localization
 echo -ne "Uncommenting needed locales...\t\t\t"
 ERROR=$(sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen 2>&1)
 check_returncode $? "$ERROR"
@@ -44,11 +42,6 @@ echo -ne "Making keyboard settings persistent...\t\t"
 echo "KEYMAP=de" > /etc/vconsole.conf
 check_returncode $? "$ERROR"
 
-#echo -ne "Setting X11 keyboard layout...\t\t"
-#ERROR=$(localectl set-x11-keymap de 2>&1 1>/dev/null)
-#check_returncode $? "$ERROR"
-
-## Subsection: Network configuration
 read -p "Enter hostname: " hostname
 echo -ne "Creating hostname file...\t\t\t"
 ERROR=$(echo "${hostname}" 2>&1 1>/etc/hostname)
@@ -58,15 +51,13 @@ echo -ne "Add entry to hosts...\t\t\t\t"
 ERROR=$(echo -e "127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.0.1\t${hostname}.localdomain ${hostname}" >> /etc/hosts)
 check_returncode $? "$ERROR"
 
-echo -ne "Enabling wheel in sudoers...\t\t"
+echo -ne "Enabling wheel in sudoers...\t\t\t"
 ERROR=$(sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers 2>&1)
 check_returncode $? "$ERROR"
-
 
 ## Subsection: Initramfs
 ## Needed later when encrypting hard drives
 
-## Subsection: Root password
 echo "Root password needed"
 passwd
 if [ $? -ne 0 ]; then
@@ -74,7 +65,6 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-## Subsection: Boot loader
 echo -ne "Installing grub...\t\t\t\t"
 ERROR=$(grub-install --target=i386-pc /dev/sda 2>&1 1>/dev/null)
 check_returncode $? "$ERROR"
@@ -88,22 +78,6 @@ if [ $? -eq 0 ]; then
     echo -e "=> Creating user finished successfully"
 else
     echo "=> Creating user failed" >&2
-    exit 1
-fi
-
-/root/chrooted/get_dotfiles.sh
-if [ $? -eq 0 ]; then
-    echo -e "=> Configuring dotfiles finished successfully"
-else
-    echo "=> Configuring dotfiles failed" >&2
-    exit 1
-fi
-
-/root/chrooted/aur_packages.sh
-if [ $? -eq 0 ]; then
-    echo -ne "=> Installing AUR Packages finished successfully"
-else
-    echo "=> Installing AUR Packages failed" >&2
     exit 1
 fi
 

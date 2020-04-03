@@ -30,11 +30,11 @@ echo -e "\n$HORIZONTALE"
 echo -e "\t   Arch Linux Installation Script"
 echo -e "$HORIZONTALE\n"
 
-# Section: Pre-Installation
-
 echo -ne "Synchronizing system clock...\t\t\t"
 ERROR=$(timedatectl set-ntp true 2>&1 1>/dev/null)
 check_returncode $? "$ERROR"
+
+# Partitioning of harddrive
 
 ./partitioning/partitioning.sh
 if [ $? -eq 0 ]; then
@@ -44,39 +44,32 @@ else
     exit 1
 fi
 
-## Subsection: Mounting the file system
-
 echo -ne "Mounting file system to /mnt...\t\t\t"
 ERROR=$(mount /dev/sda1 /mnt 2>&1 1>/dev/null)
 check_returncode $? "$ERROR"
 
-# Section: Installation
-
 echo -ne "Downloading current mirrorlist...\t\t"
 ERROR=$(curl --silent "https://www.archlinux.org/mirrorlist/?country=all&protocol=http&protocol=https&ip_version=4" | sed 's/#Server/Server/' > /etc/pacman.d/mirrorlist)
 check_returncode $? "$ERROR"
+
+# Actual Installation
 
 echo -ne "Installing essential packages...\t\t"
 ERROR=$(pacstrap /mnt $(cat packagelist) 2>&1 1>/dev/null)
 #ERROR=$(pacstrap /mnt base base linux linux-firmware grub 2>&1 1>/dev/null)
 check_returncode $? "$ERROR"
 
-# Section: Configure the system
-
 echo -ne "Generating an fstab file...\t\t\t"
 ERROR=$(genfstab -U /mnt 2>&1 1>>/mnt/etc/fstab)
 check_returncode $? "$ERROR"
 
-# Subsection: Chroot
+# Chrooting
 
-mkdir /mnt/root/.ssh
-cp /root/.ssh/id_rsa /mnt/root/.ssh/.
-
-cp -r chrooted/ /mnt/root/.
+# You re on master now
+cp -r chrooted/ /mnt/root.
 chmod +x /mnt/root/chrooted/*
 
 arch-chroot /mnt /root/chrooted/chrooted.sh 2>&1
-
 if [ $? -eq 0 ]; then
     echo -e "=> Chrooted configuration successfully finished"
 else
@@ -84,4 +77,20 @@ else
     exit 1
 fi
 
-echo -e "=> Arch base installation finished!"
+# Setting up user environment
+## This part should depend on specific commandline argument
+cp -r setup/ /mnt/root/.
+chmod +x /mnt/root/setup/*
+cp -r /root/.ssh /mnt/home/nick/.
+chown -R nick:users /mnt/home/nick/*
+
+arch-chroot /mnt /root/setup/setup_user.sh 2>&1
+if [ $? -eq 0 ]; then
+    echo -e "=> Setting up user environmet sucessfully finished"
+else
+    echo -e "=> Setting up user environmet failed" >&2
+    exit 1
+fi
+##
+
+echo -e "=> Arch Linux installation finished!"

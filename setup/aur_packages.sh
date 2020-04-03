@@ -37,15 +37,15 @@ install_aurpkg() {
     REPO=${1}
     NAME=$(echo "$REPO" | awk -F '/' '{print $4}')
 
-    if [ ! -d /home/nick/workspace/arch ]; then
-        mkdir -p /home/nick/workspace/arch
+    if [ ! -d ~/workspace/arch ]; then
+        mkdir -p ~/workspace/arch
     fi
 
     echo -ne "Cloning '$NAME'...\t"
-    ERROR=$(git clone -q "$REPO" /home/nick/workspace/arch/"$NAME" 2>&1)
+    ERROR=$(git clone -q "$REPO" ~/workspace/arch/"$NAME" 2>&1)
     check_returncode $? "$ERROR"
 
-    cd /home/nick/workspace/arch/"$NAME"
+    cd ~/workspace/arch/"$NAME"
 
     echo -ne "Installing '$NAME'...\t"
     ERROR=$(makepkg -risc --nocolor --noconfirm --needed 2>&1 1>/dev/null)
