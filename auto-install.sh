@@ -79,7 +79,7 @@ fi
 # Setting up user environment
 ## This part should depend on specific commandline argument
 mkdir -p /mnt/home/nick/.local/
-cp -r setup/* /mnt/home/nick/.local/
+cp -r setup/ /mnt/home/nick/.local/.
 cp -r /root/.ssh /mnt/home/nick/.
 
 chmod +x /mnt/home/nick/.local/setup/*
