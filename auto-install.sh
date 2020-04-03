@@ -78,12 +78,13 @@ fi
 
 # Setting up user environment
 ## This part should depend on specific commandline argument
-mkdir -p /home/nick/.local/
+mkdir -p /mnt/home/nick/.local/
 cp -r setup/* /mnt/home/nick/.local/
-chmod +x /mnt/home/nick/.local/setup/*
-chown -R nick:users /mnt/home/nick/.local/setup
-
 cp -r /root/.ssh /mnt/home/nick/.
+
+chmod +x /mnt/home/nick/.local/setup/*
+
+chown -R nick:users /mnt/home/nick/.local/setup/
 chown -R nick:users /mnt/home/nick/.ssh/
 
 arch-chroot /mnt /home/nick/.local/setup/setup_user.sh 2>&1
