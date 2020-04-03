@@ -65,7 +65,7 @@ check_returncode $? "$ERROR"
 
 # Chrooting
 
-# You re on master now
+# You re on chroot now
 cp -r chrooted/ /mnt/root.
 chmod +x /mnt/root/chrooted/*
 
