@@ -37,16 +37,15 @@ build() {
     REPO=${1}
     NAME=$(echo "$REPO" | awk -F '/' '{print $4}')
 
-    echo -ne "Cloning '$NAME'...\t"
+    echo -n "Cloning  '$NAME'..."
     ERROR=$(git clone -q "$REPO" ~/workspace/arch/"$NAME" 2>&1)
     check_returncode $? "$ERROR"
 
     cd ~/workspace/arch/"$NAME"
 
-    echo -ne "Building '$NAME'...\t"
+    echo -n "Building '$NAME'..."
     ERROR=$(PKGDEST="~/workspace/arch/packages" makepkg -rsc --nocolor --noconfirm --needed 2>&1 1>/dev/null)
     check_returncode $? "$ERROR"
-    return $?
 }
 
 install_packages() {
@@ -59,14 +58,14 @@ install_packages() {
     else
         echo "=> AUR Packages installation failed" >&2
         return $RETURN
-    fi   
+    fi
 }
 
 echo -e "\n$SUBHORIZONTALE"
 echo -e "\tAUR Packages"
 echo -e "$SUBHORIZONTALE\n"
 
-echo -ne "Creating directories...\t\t\t\t"
+echo -ne "Creating directories..."
 ERROR=$(mkdir -p ~/workspace/arch/packages 2>&1 1>/dev/null)
 check_returncode $? "$ERROR"
 
