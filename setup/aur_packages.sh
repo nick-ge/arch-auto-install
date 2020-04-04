@@ -13,6 +13,8 @@ AUR_REPOS=("https://aur.archlinux.org/zsh-syntax-highlighting-git.git" \
            "https://aur.archlinux.org/ttf-dejavu-sans-code.git" \
            "https://aur.archlinux.org/noto-fonts-sc.git")
 
+export PKGDEST="~/workspace/arch/packages"
+
 check_returncode() {
     local RETURN=${1} ERRORTEXT=${2}
     if [ $RETURN -eq 0 ]; then
@@ -44,7 +46,7 @@ build() {
     cd ~/workspace/arch/"$NAME"
 
     echo -n "Building '$NAME'..."
-    ERROR=$(PKGDEST="~/workspace/arch/packages" makepkg -rsc --nocolor --noconfirm --needed 2>&1 1>/dev/null)
+    ERROR=$(makepkg -rsc --nocolor --noconfirm --needed 2>&1 1>/dev/null)
     check_returncode $? "$ERROR"
 }
 
