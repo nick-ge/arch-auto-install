@@ -1,6 +1,6 @@
 #!/bin/sh
 
-chown -R nick:users /home/nick/.local/setup/
+chown -R nick:users /home/nick/.local/
 chown -R nick:users /home/nick/.ssh/
 
 su nick -c /home/nick/.local/setup/get_dotfiles.sh

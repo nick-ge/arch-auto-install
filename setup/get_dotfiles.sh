@@ -29,28 +29,35 @@ check_returncode $? "$ERROR"
 
 echo -ne "\nCopying git directory...\t\t\t"
 ERROR=$(cp -r ~/dot-files/.git ~/.dotfiles.git 2>&1 1>/dev/null)
-check_returncode $? "$ERROR"
+rt=$?
 
-# Active globbing on hidden-/dotfiles
-shopt -s dotglob
+if [ $? -eq 0 ]; then
 
-echo -ne "Moving dotfiles to home...\t\t\t"
-ERROR=$(mv ~/dot-files/* ~/. 2>&1 1>/dev/null)
-check_returncode $? "$ERROR"
+    # Active globbing on hidden-/dotfiles
+    shopt -s dotglob
 
-echo -ne "Removing repository from home...\t\t"
-ERROR=$(rm -r ~/dot-files 2>&1 1>/dev/null)
-check_returncode $? "$ERROR"
+    echo -ne "Moving dotfiles to home...\t\t\t"
+    ERROR=$(mv ~/dot-files/* ~/. 2>&1 1>/dev/null)
+    check_returncode $? "$ERROR"
 
-echo -ne "Creating 'exclude' file...\t\t\t"
-ERROR=$(echo "*" 2>&1 1>>~/.dotfiles.git/info/exclude)
-check_returncode $? "$ERROR"
+    echo -ne "Removing repository from home...\t\t"
+    ERROR=$(rm -r ~/dot-files 2>&1 1>/dev/null)
+    check_returncode $? "$ERROR"
 
-#echo -ne "Changing owner to nick...\t\t\t"
-#ERROR=$(chown -R nick:users ~/* 2>&1 1>/dev/null)
-#check_returncode $? "$ERROR"
+    echo -ne "Creating 'exclude' file...\t\t\t"
+    ERROR=$(echo "*" 2>&1 1>>~/.dotfiles.git/info/exclude)
+    check_returncode $? "$ERROR"
 
-# Deactive globbing
-shopt -u dotglob
+    #echo -ne "Changing owner to nick...\t\t\t"
+    #ERROR=$(chown -R nick:users ~/* 2>&1 1>/dev/null)
+    #check_returncode $? "$ERROR"
+
+    # Deactive globbing
+    shopt -u dotglob
+
+else
+    echo -e "$ERROR" >&2    
+    exit $rt
+fi
 
 exit 0
