@@ -3,7 +3,7 @@
 chown -R nick:users /home/nick/.local/
 chown -R nick:users /home/nick/.ssh/
 
-su nick -c /home/nick/.local/setup/get_dotfiles.sh
+su -P -c /home/nick/.local/setup/get_dotfiles.sh nick
 if [ $? -eq 0 ]; then
     echo -e "=> Configuring dotfiles finished successfully"
 else
@@ -11,7 +11,7 @@ else
     exit 1
 fi
 
-su nick -c /home/nick/.local/setup/aur_packages.sh
+su -P -c /home/nick/.local/setup/aur_packages.sh nick
 if [ $? -eq 0 ]; then
     echo -ne "=> Installing AUR Packages finished successfully"
 else
