@@ -4,6 +4,7 @@ SUBHORIZONTALE="==========================="
 
 PUB_KEYS=("EB774491D9FF06E2")
 
+
 AUR_REPOS=("https://aur.archlinux.org/zsh-syntax-highlighting-git.git" \
            "https://aur.archlinux.org/polybar.git" \
           #"https://aur.archlinux.org/tor-browser.git" \
