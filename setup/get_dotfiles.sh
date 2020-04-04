@@ -25,13 +25,13 @@ check_returncode $? "$ERROR"
 
 echo -e "\nCloning repository 'nick-ge/dot-files'..."
 ERROR=$(git clone -q git@github.com:nick-ge/dot-files.git ~/dot-files 2>&1)
-check_returncode $? "$ERROR"
-
-echo -ne "\nCopying git directory...\t\t\t"
-ERROR=$(cp -r ~/dot-files/.git ~/.dotfiles.git 2>&1 1>/dev/null)
 rt=$?
 
-if [ $? -eq 0 ]; then
+if [ $rt -eq 0 ]; then
+
+    echo -ne "\nCopying git directory...\t\t\t"
+    ERROR=$(cp -r ~/dot-files/.git ~/.dotfiles.git 2>&1 1>/dev/null)
+    check_returncode $? "$ERROR"
 
     # Active globbing on hidden-/dotfiles
     shopt -s dotglob
