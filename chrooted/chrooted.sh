@@ -42,6 +42,10 @@ echo -ne "Setting VC keyboard layout...\t\t"
 echo "KEYMAP=de" > /etc/vconsole.conf
 check_returncode $? "$ERROR"
 
+echo -ne "Setting X11 keyboard layout...\t\t"
+ERROR=$(echo -e "Section \"InputClass\"\n\tIdentifier \"system-keyboard\"\n\tMatchIsKeyboard \"on\"\n\tOption \"XkbLayout\" \"de\"\nEndSection" > /etc/X11/xorg.conf.d/00-keyboard.conf)
+check_returncode $? "$ERROR"
+
 read -p "Enter hostname: " hostname
 echo -ne "Creating hostname file...\t\t\t"
 ERROR=$(echo "${hostname}" 2>&1 1>/etc/hostname)
