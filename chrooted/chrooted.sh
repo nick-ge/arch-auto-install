@@ -60,7 +60,7 @@ check_returncode $? "$ERROR"
 
 # Setting root password
 bool=1
-while [ ! bool -eq 0 ]; do
+while [ ! $bool -eq 0 ]; do
     echo "Root password needed"
     passwd
     if [ $? -eq 0 ]; then bool=0; else bool=1; fi

@@ -32,7 +32,7 @@ ERROR=$(useradd -m -N -G "$GROUPNAMES" -s "$SHELL" "$username" 2>&1 1>/dev/null)
 check_returncode $? "$ERROR"
 
 bool=1
-while [ ! bool -eq 0 ]; do
+while [ ! $bool -eq 0 ]; do
     echo "Password needed for ${username}"
     passwd $username
     if [ $? -eq 0 ]; then bool=0; else bool=1; fi
