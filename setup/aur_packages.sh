@@ -80,8 +80,7 @@ for repo in "${AUR_REPOS[@]}"; do
     build "$repo"
 done
 
-ls ~/workspace/arch/packages
-
+# Install all packages in one step
 install_packages
 
 exit 0
