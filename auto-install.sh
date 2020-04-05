@@ -56,7 +56,6 @@ check_returncode $? "$ERROR"
 
 echo -ne "Installing essential packages...\t\t"
 ERROR=$(pacstrap /mnt $(cat packagelist) 2>&1 1>/dev/null)
-#ERROR=$(pacstrap /mnt base base linux linux-firmware grub 2>&1 1>/dev/null)
 check_returncode $? "$ERROR"
 
 echo -ne "Generating an fstab file...\t\t\t"
@@ -70,7 +69,7 @@ chmod +x /mnt/root/.local/chrooted/*
 
 arch-chroot /mnt /root/.local/chrooted/chrooted.sh 2>&1
 if [ $? -eq 0 ]; then
-    echo -e "=> Chrooted configuration successfully finished"
+    echo -e "=> Chrooted configuration finished"
 else
     echo -e "=> Chrooted configuration failed" >&2
     exit 1
@@ -86,7 +85,7 @@ chmod +x /mnt/home/nick/.local/setup/*
 
 arch-chroot /mnt /home/nick/.local/setup/setup_user.sh 2>&1
 if [ $? -eq 0 ]; then
-    echo -e "=> Setting up user environmet sucessfully finished"
+    echo -e "=> Setting up user environmet finished"
 else
     echo -e "=> Setting up user environmet failed" >&2
     exit 1

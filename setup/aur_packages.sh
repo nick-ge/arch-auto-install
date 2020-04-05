@@ -38,7 +38,7 @@ import_key() {
 build() {
     # Saving URL to repository in a variable and using awk to extract the 'folder' name
     REPO=${1}
-    NAME=$(echo "$REPO" | awk -F '/' '{print $4}')
+    NAME=$(echo "$REPO" | awk -F '/' '{print substr($4, 1, length($4) - 4)}')
 
     echo -n "Cloning  '$NAME'..."
     ERROR=$(git clone -q "$REPO" ~/workspace/arch/"$NAME" 2>&1)
