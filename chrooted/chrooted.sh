@@ -38,7 +38,7 @@ echo -ne "Creating /etc/locale.conf...\t\t\t"
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 check_returncode $? "$ERROR"
 
-echo -ne "Making keyboard settings persistent...\t\t"
+echo -ne "Setting VC keyboard layout...\t\t"
 echo "KEYMAP=de" > /etc/vconsole.conf
 check_returncode $? "$ERROR"
 
