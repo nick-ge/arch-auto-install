@@ -53,7 +53,7 @@ build() {
 
 install_packages() {
     echo "Installing all built packages..."
-    ERROR=$(sudo pacman -U ~/workspace/arch/packages/*.tar.xz 2>&1 1>/dev/null)
+    ERROR=$(sudo pacman -U --noconfirm ~/workspace/arch/packages/*.tar.xz 2>&1 1>/dev/null)
     RETURN=$?
     if [ $? -eq 0 ]; then
         echo "=> All packages installed successfully"
