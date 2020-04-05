@@ -46,9 +46,16 @@ build() {
 
     cd ~/workspace/arch/"$NAME"
 
-    echo -n "Building '$NAME'..."
+    echo "Building '$NAME'..."
     ERROR=$(PKGDEST="${HOME}/workspace/arch/packages" makepkg -rsc --nocolor --noconfirm --needed 2>&1 1>/dev/null)
-    check_returncode $? "$ERROR"
+    if [ $? -eq 0 ]; then
+        echo "=> Building '$NAME' finished"
+        return 0
+    else
+        echo "Building '$NAME' failed"
+        echo "${ERROR}" >&2
+        exit 1
+    fi
 }
 
 install_packages() {
