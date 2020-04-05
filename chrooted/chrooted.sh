@@ -58,12 +58,13 @@ check_returncode $? "$ERROR"
 ## Subsection: Initramfs
 ## Needed later when encrypting hard drives
 
-echo "Root password needed"
-passwd
-if [ $? -ne 0 ]; then
-    echo "Setting root password failed" >&2
-    exit 1
-fi
+# Setting root password
+bool=1
+while [ ! bool -eq 0 ]; do
+    echo "Root password needed"
+    passwd
+    if [ $? -eq 0 ]; then bool=0; else bool=1; fi
+done
 
 echo -ne "Installing grub...\t\t\t\t"
 ERROR=$(grub-install --target=i386-pc /dev/sda 2>&1 1>/dev/null)

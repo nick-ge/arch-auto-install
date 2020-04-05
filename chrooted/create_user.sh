@@ -31,11 +31,11 @@ echo -ne "Adding user ${username}...\t\t\t\t"
 ERROR=$(useradd -m -N -G "$GROUPNAMES" -s "$SHELL" "$username" 2>&1 1>/dev/null)
 check_returncode $? "$ERROR"
 
-echo "Password needed for ${username}"
-passwd $username
-if [ $? -ne 0 ]; then
-    echo "Setting password for ${username} failed" >&2
-    exit 1
-fi
+bool=1
+while [ ! bool -eq 0 ]; do
+    echo "Password needed for ${username}"
+    passwd $username
+    if [ $? -eq 0 ]; then bool=0; else bool=1; fi
+done
 
 exit 0
