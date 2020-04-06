@@ -52,7 +52,7 @@ build() {
 }
 
 install_packages() {
-    echo "Installing all built packages..."
+    echo -n "Installing all built packages..."
     ERROR=$(sudo pacman -U --noconfirm ~/workspace/arch/packages/*.tar.xz 2>&1 1>/dev/null)
     check_returncode $? "$ERROR"
 }
