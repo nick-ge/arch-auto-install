@@ -48,27 +48,13 @@ build() {
 
     echo "Building '$NAME'..."
     ERROR=$(PKGDEST="${HOME}/workspace/arch/packages" makepkg -rsc --nocolor --noconfirm --needed 2>&1 1>/dev/null)
-    if [ $? -eq 0 ]; then
-        echo "=> Building '$NAME' finished"
-        return 0
-    else
-        echo "Building '$NAME' failed"
-        echo "${ERROR}" >&2
-        exit 1
-    fi
+    check_returncode $? "$ERROR"
 }
 
 install_packages() {
     echo "Installing all built packages..."
     ERROR=$(sudo pacman -U --noconfirm ~/workspace/arch/packages/*.tar.xz 2>&1 1>/dev/null)
-    RETURN=$?
-    if [ $? -eq 0 ]; then
-        echo "=> All packages installed successfully"
-        return 0
-    else
-        echo "=> AUR Packages installation failed" >&2
-        return $RETURN
-    fi
+    check_returncode $? "$ERROR"
 }
 
 echo -e "\n$SUBHORIZONTALE"
