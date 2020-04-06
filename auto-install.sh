@@ -77,19 +77,19 @@ fi
 
 ## Setting up user environment
 ### This part should depend on specific commandline argument
-#mkdir -p /mnt/home/nick/.local/
-#cp -r setup/ /mnt/home/nick/.local/.
-#cp -r /root/.ssh /mnt/home/nick/.
-#
-#chmod +x /mnt/home/nick/.local/setup/*
-#
-#arch-chroot /mnt /home/nick/.local/setup/setup_user.sh 2>&1
-#if [ $? -eq 0 ]; then
-#    echo -e "=> Setting up user environmet finished"
-#else
-#    echo -e "=> Setting up user environmet failed" >&2
-#    exit 1
-#fi
-###
+mkdir -p /mnt/home/nick/.local/
+cp -r setup/ /mnt/home/nick/.local/.
+cp -r /root/.ssh /mnt/home/nick/.
+
+chmod +x /mnt/home/nick/.local/setup/*
+
+arch-chroot /mnt /home/nick/.local/setup/setup_user.sh 2>&1
+if [ $? -eq 0 ]; then
+    echo -e "=> Setting up user environmet finished"
+else
+    echo -e "=> Setting up user environmet failed" >&2
+    exit 1
+fi
+##
 
 echo -e "=> Arch Linux installation finished!"

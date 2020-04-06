@@ -95,5 +95,4 @@ done
 # Install all packages in one step
 install_packages
 
-
 exit 0
