@@ -62,7 +62,7 @@ echo -ne "Generating an fstab file...\t\t\t"
 ERROR=$(genfstab -U /mnt 2>&1 1>>/mnt/etc/fstab)
 check_returncode $? "$ERROR"
 
-echo -ne "Setting sudo timeout...\t\t\t"
+echo -ne "Setting sudo timeout...\t\t\t\t"
 ERROR=$(echo "Defaults timestamp_timeout=30" > /mnt/etc/sudoers.d/00_timeout)
 check_returncode $? "$ERROR"
 

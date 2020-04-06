@@ -46,7 +46,7 @@ build() {
 
     cd ~/workspace/arch/"$NAME"
 
-    echo "Building '$NAME'..."
+    echo -n "Building '$NAME'..."
     ERROR=$(PKGDEST="${HOME}/workspace/arch/packages" makepkg -rsc --nocolor --noconfirm --needed 2>&1 1>/dev/null)
     check_returncode $? "$ERROR"
 }
