@@ -63,18 +63,18 @@ ERROR=$(genfstab -U /mnt 2>&1 1>>/mnt/etc/fstab)
 check_returncode $? "$ERROR"
 
 # Chrooting
-#mkdir -p /mnt/root/.local/
-#cp -r chrooted/ /mnt/root/.local/.
-#chmod +x /mnt/root/.local/chrooted/*
-#
-#arch-chroot /mnt /root/.local/chrooted/chrooted.sh 2>&1
-#if [ $? -eq 0 ]; then
-#    echo -e "=> Chrooted configuration finished"
-#else
-#    echo -e "=> Chrooted configuration failed" >&2
-#    exit 1
-#fi
-#
+mkdir -p /mnt/root/.local/
+cp -r chrooted/ /mnt/root/.local/.
+chmod +x /mnt/root/.local/chrooted/*
+
+arch-chroot /mnt /root/.local/chrooted/chrooted.sh 2>&1
+if [ $? -eq 0 ]; then
+    echo -e "=> Chrooted configuration finished"
+else
+    echo -e "=> Chrooted configuration failed" >&2
+    exit 1
+fi
+
 ## Setting up user environment
 ### This part should depend on specific commandline argument
 #mkdir -p /mnt/home/nick/.local/
