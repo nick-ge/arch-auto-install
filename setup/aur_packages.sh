@@ -75,6 +75,11 @@ echo -e "\n$SUBHORIZONTALE"
 echo -e "\tAUR Packages"
 echo -e "$SUBHORIZONTALE\n"
 
+echo "=> Authentication required to install all AUR packages:"
+sudo -v 
+
+if [ $? -ne 0 ]; then echo "=> Authentication failed" >&2; exit 1; fi
+
 echo -ne "Creating directories..."
 ERROR=$(mkdir -p ~/workspace/arch/packages 2>&1 1>/dev/null)
 check_returncode $? "$ERROR"
@@ -89,5 +94,6 @@ done
 
 # Install all packages in one step
 install_packages
+
 
 exit 0
