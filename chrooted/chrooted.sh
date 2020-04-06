@@ -38,11 +38,11 @@ echo -ne "Creating /etc/locale.conf...\t\t\t"
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 check_returncode $? "$ERROR"
 
-echo -ne "Setting VC keyboard layout...\t\t"
+echo -ne "Setting VC keyboard layout...\t\t\t"
 echo "KEYMAP=de" > /etc/vconsole.conf
 check_returncode $? "$ERROR"
 
-echo -ne "Setting X11 keyboard layout...\t\t"
+echo -ne "Setting X11 keyboard layout...\t\t\t"
 ERROR=$(echo -e "Section \"InputClass\"\n\tIdentifier \"system-keyboard\"\n\tMatchIsKeyboard \"on\"\n\tOption \"XkbLayout\" \"de\"\nEndSection" > /etc/X11/xorg.conf.d/00-keyboard.conf)
 check_returncode $? "$ERROR"
 
