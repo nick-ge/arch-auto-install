@@ -62,7 +62,7 @@ echo -e "\tAUR Packages"
 echo -e "$SUBHORIZONTALE\n"
 
 echo "=> Authentication required to install all AUR packages:"
-sudo -v 
+sudo -v
 
 if [ $? -ne 0 ]; then echo "=> Authentication failed" >&2; exit 1; fi
 

@@ -96,4 +96,4 @@ else
 fi
 ##
 
-echo -e "=> Arch Linux installation finished!"
+echo -e "=> Arch Linux installation finished"
