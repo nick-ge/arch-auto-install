@@ -1,4 +1,4 @@
-# Arch-auto-install
+# arch-auto-install
 
 A bash script that installs Arch Linux for my personal needs. It is part of my custom Archiso.
 
